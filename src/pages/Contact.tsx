@@ -1,4 +1,5 @@
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,6 +8,20 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const Contact = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const subject = encodeURIComponent(`Contact Us - ${name || "New Message"}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`
+    );
+    window.location.href = `mailto:Gbadamosia21@gmail.com?subject=${subject}&body=${body}`;
+  };
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -24,24 +39,40 @@ const Contact = () => {
             {/* Contact Form */}
             <Card>
               <CardContent className="pt-6">
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleSubmit}>
                   <div>
                     <label className="block text-sm font-medium mb-2">Name</label>
-                    <Input placeholder="Your full name" />
+                    <Input
+                      placeholder="Your full name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-2">Email</label>
-                    <Input type="email" placeholder="your@email.com" />
+                    <Input
+                      type="email"
+                      placeholder="your@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-2">Phone</label>
-                    <Input type="tel" placeholder="+234 812 770 4308" />
+                    <Input
+                      type="tel"
+                      placeholder="+234 812 770 4308"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-2">Message</label>
                     <Textarea 
                       placeholder="How can we help you?" 
                       rows={6}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
                     />
                   </div>
                   <Button className="w-full" size="lg">Send Message</Button>
@@ -71,7 +102,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Email</h3>
-                      <p className="text-muted-foreground">info@anugadget.com</p>
+                      <p className="text-muted-foreground">Gbadamosia21@gmail.com</p>
                       <p className="text-sm text-muted-foreground">We'll respond within 24 hours</p>
                     </div>
                   </div>
@@ -82,7 +113,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Location</h3>
-                      <p className="text-muted-foreground">3/99 Olukoleosho Ikeja Mokland Plaza</p>
+                      <p className="text-muted-foreground">3/9 Olukoleosho Ikeja Mokland Plaza</p>
                       <p className="text-sm text-muted-foreground">Visit our showroom</p>
                     </div>
                   </div>
@@ -94,9 +125,15 @@ const Contact = () => {
                     <div>
                       <h3 className="font-semibold mb-1">WhatsApp</h3>
                       <p className="text-muted-foreground">Chat with us instantly</p>
-                      <Button variant="outline" className="mt-2">
-                        <MessageCircle className="mr-2 h-4 w-4" />
-                        Start Chat
+                      <Button asChild variant="outline" className="mt-2">
+                        <a
+                          href="https://wa.me/2348127704308"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <MessageCircle className="mr-2 h-4 w-4" />
+                          Start Chat
+                        </a>
                       </Button>
                     </div>
                   </div>

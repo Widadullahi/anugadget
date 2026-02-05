@@ -144,7 +144,7 @@ const Footer = () => {
               <ul className="space-y-3 text-sm text-background/60">
                 <li className="flex items-start gap-2">
                   <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-primary" />
-                  <span>3/99 Olukoleosho Ikeja Mokland Plaza</span>
+                  <span>3/9 Olukoleosho Ikeja Mokland Plaza</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Phone className="h-4 w-4 shrink-0 text-primary" />
@@ -152,7 +152,7 @@ const Footer = () => {
                 </li>
                 <li className="flex items-center gap-2">
                   <Mail className="h-4 w-4 shrink-0 text-primary" />
-                  <span>info@anugadget.com</span>
+                  <span>Gbadamosia21@gmail.com</span>
                 </li>
               </ul>
             </div>
