@@ -452,7 +452,7 @@ const AdminDashboard = () => {
                   <CardContent className="h-64 flex items-center justify-center text-muted-foreground">
                     <div className="text-center">
                       <BarChart3 className="h-16 w-16 mx-auto mb-4 opacity-50" />
-                      <p>Connect to Lovable Cloud for real-time analytics</p>
+                      <p>Connect your analytics provider for real-time insights</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -463,7 +463,7 @@ const AdminDashboard = () => {
                   <CardContent className="h-64 flex items-center justify-center text-muted-foreground">
                     <div className="text-center">
                       <TrendingUp className="h-16 w-16 mx-auto mb-4 opacity-50" />
-                      <p>Connect to Lovable Cloud for real-time analytics</p>
+                      <p>Connect your analytics provider for real-time insights</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -490,7 +490,7 @@ const AdminDashboard = () => {
                     </div>
                     <div>
                       <label className="text-sm font-medium mb-2 block">Phone Number</label>
-                      <Input defaultValue="+234 800 123 4567" />
+                      <Input defaultValue="+234 812 770 4308" />
                     </div>
                     <div>
                       <label className="text-sm font-medium mb-2 block">Currency</label>

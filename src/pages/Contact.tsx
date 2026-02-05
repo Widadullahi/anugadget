@@ -35,7 +35,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-2">Phone</label>
-                    <Input type="tel" placeholder="+234 XXX XXX XXXX" />
+                    <Input type="tel" placeholder="+234 812 770 4308" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-2">Message</label>
@@ -60,7 +60,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Phone</h3>
-                      <p className="text-muted-foreground">+234 XXX XXX XXXX</p>
+                      <p className="text-muted-foreground">+234 812 770 4308</p>
                       <p className="text-sm text-muted-foreground">Mon-Sat, 9am-6pm</p>
                     </div>
                   </div>
@@ -82,7 +82,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Location</h3>
-                      <p className="text-muted-foreground">Lagos, Nigeria</p>
+                      <p className="text-muted-foreground">3/99 Olukoleosho Ikeja Mokland Plaza</p>
                       <p className="text-sm text-muted-foreground">Visit our showroom</p>
                     </div>
                   </div>
