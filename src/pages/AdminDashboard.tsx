@@ -1,9 +1,16 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter
+} from "@/components/ui/dialog";
 import { 
   Table,
   TableBody,
@@ -56,7 +63,7 @@ const recentOrders = [
   { id: "ORD-005", customer: "Tunde Bakare", email: "tunde@email.com", amount: 2500000, status: "shipped", date: "2024-01-17" }
 ];
 
-const products = [
+const initialProducts = [
   { id: 1, name: "iPhone 15 Pro Max 256GB", price: 1200000, stock: 15, category: "Phones", image: iphone15ProMax, status: "active" },
   { id: 2, name: "MacBook Pro M3 14-inch", price: 2500000, stock: 8, category: "Computing", image: macbookProM3, status: "active" },
   { id: 3, name: "Apple Watch Ultra 2", price: 800000, stock: 12, category: "Wearables", image: appleWatchUltra2, status: "active" },
@@ -77,6 +84,32 @@ const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("dashboard");
   const [searchQuery, setSearchQuery] = useState("");
+  const [productList, setProductList] = useState(initialProducts);
+  const [settingsSaved, setSettingsSaved] = useState(false);
+  const [inventoryOpen, setInventoryOpen] = useState(false);
+  const [inventoryQty, setInventoryQty] = useState("1");
+  const [inventoryMode, setInventoryMode] = useState<"sale" | "restock">("sale");
+  const [inventoryProductId, setInventoryProductId] = useState<number | null>(null);
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const stored = localStorage.getItem("anugadget_admin_products_v1");
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setProductList(parsed);
+        }
+      } catch {
+        // ignore invalid storage
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("anugadget_admin_products_v1", JSON.stringify(productList));
+  }, [productList]);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-NG', {
@@ -98,6 +131,7 @@ const AdminDashboard = () => {
     }
   };
 
+
   const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "orders", label: "Orders", icon: ShoppingCart },
@@ -106,6 +140,69 @@ const AdminDashboard = () => {
     { id: "analytics", label: "Analytics", icon: BarChart3 },
     { id: "settings", label: "Settings", icon: Settings }
   ];
+
+  const handleDeleteProduct = (productId: number) => {
+    if (!confirm("Delete this product?")) return;
+    setProductList((prev) => prev.filter((p) => p.id !== productId));
+  };
+
+  // Inventory updates now handled via modal (offline sales + restock)
+
+  const [settings, setSettings] = useState({
+    storeName: "Anu Gadget",
+    contactEmail: "Gbadamosia21@gmail.com",
+    phoneNumber: "+234 812 770 4308",
+    address: "3/9 Olukoleosho Ikeja Mokland Plaza",
+  });
+
+  useEffect(() => {
+    const stored = localStorage.getItem("anugadget_admin_settings_v1");
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        setSettings({
+          storeName: parsed?.storeName || "Anu Gadget",
+          contactEmail: parsed?.contactEmail || "Gbadamosia21@gmail.com",
+          phoneNumber: parsed?.phoneNumber || "+234 812 770 4308",
+          address: parsed?.address || "3/9 Olukoleosho Ikeja Mokland Plaza",
+        });
+      } catch {
+        // ignore
+      }
+    }
+  }, []);
+
+  const handleSaveSettings = () => {
+    localStorage.setItem("anugadget_admin_settings_v1", JSON.stringify(settings));
+    window.dispatchEvent(new Event("anugadget-settings-updated"));
+    setSettingsSaved(true);
+    setTimeout(() => setSettingsSaved(false), 1500);
+  };
+
+  const openInventoryModal = (productId: number, mode: "sale" | "restock") => {
+    setInventoryProductId(productId);
+    setInventoryMode(mode);
+    setInventoryQty("1");
+    setInventoryOpen(true);
+  };
+
+  const handleInventoryUpdate = () => {
+    if (!inventoryProductId) return;
+    const qty = Number(inventoryQty);
+    if (Number.isNaN(qty) || qty <= 0) return;
+    setProductList((prev) =>
+      prev.map((p) => {
+        if (p.id !== inventoryProductId) return p;
+        const nextStock = inventoryMode === "sale" ? Math.max(0, p.stock - qty) : p.stock + qty;
+        return {
+          ...p,
+          stock: nextStock,
+          status: nextStock <= 0 ? "out_of_stock" : "active",
+        };
+      })
+    );
+    setInventoryOpen(false);
+  };
 
   return (
     <div className="min-h-screen bg-muted/30">
@@ -263,7 +360,7 @@ const AdminDashboard = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      {products.slice(0, 4).map((product, idx) => (
+                      {productList.slice(0, 4).map((product, idx) => (
                         <div key={product.id} className="flex items-center gap-4">
                           <span className="text-sm text-muted-foreground w-6">{idx + 1}.</span>
                           <img src={product.image} alt="" className="w-10 h-10 rounded object-cover" />
@@ -283,7 +380,7 @@ const AdminDashboard = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      {products.filter(p => p.stock <= 10).map((product) => (
+                      {productList.filter(p => p.stock <= 10).map((product) => (
                         <div key={product.id} className="flex items-center gap-4">
                           <img src={product.image} alt="" className="w-10 h-10 rounded object-cover" />
                           <div className="flex-1 min-w-0">
@@ -292,7 +389,13 @@ const AdminDashboard = () => {
                               {product.stock === 0 ? 'Out of stock' : `${product.stock} left`}
                             </p>
                           </div>
-                          <Button variant="outline" size="sm">Restock</Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => openInventoryModal(product.id, "restock")}
+                          >
+                            Restock
+                          </Button>
                         </div>
                       ))}
                     </div>
@@ -351,55 +454,96 @@ const AdminDashboard = () => {
           )}
 
           {activeTab === "products" && (
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>All Products</CardTitle>
-                <Button className="bg-primary hover:bg-primary/90">
+            <>
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <CardTitle>All Products</CardTitle>
+                <Button className="bg-primary hover:bg-primary/90" onClick={() => navigate("/admin/login/add-product")}>
                   <Plus className="mr-2 h-4 w-4" /> Add Product
                 </Button>
-              </CardHeader>
-              <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Product</TableHead>
-                      <TableHead>Category</TableHead>
-                      <TableHead>Price</TableHead>
-                      <TableHead>Stock</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {products.map((product) => (
-                      <TableRow key={product.id}>
-                        <TableCell>
-                          <div className="flex items-center gap-3">
-                            <img src={product.image} alt="" className="w-12 h-12 rounded object-cover" />
-                            <span className="font-medium">{product.name}</span>
-                          </div>
-                        </TableCell>
-                        <TableCell>{product.category}</TableCell>
-                        <TableCell>{formatPrice(product.price)}</TableCell>
-                        <TableCell>{product.stock}</TableCell>
-                        <TableCell>
-                          <Badge className={getStatusColor(product.status)}>
-                            {product.status.replace('_', ' ')}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            <Button variant="ghost" size="icon"><Eye className="h-4 w-4" /></Button>
-                            <Button variant="ghost" size="icon"><Edit className="h-4 w-4" /></Button>
-                            <Button variant="ghost" size="icon" className="text-destructive"><Trash2 className="h-4 w-4" /></Button>
-                          </div>
-                        </TableCell>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Product</TableHead>
+                        <TableHead>Category</TableHead>
+                        <TableHead>Price</TableHead>
+                        <TableHead>Stock</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Actions</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
+                    </TableHeader>
+                    <TableBody>
+                      {productList.map((product) => (
+                        <TableRow key={product.id}>
+                          <TableCell>
+                            <div className="flex items-center gap-3">
+                              <img src={product.image} alt="" className="w-12 h-12 rounded object-cover" />
+                              <span className="font-medium">{product.name}</span>
+                            </div>
+                          </TableCell>
+                          <TableCell>{product.category}</TableCell>
+                          <TableCell>{formatPrice(product.price)}</TableCell>
+                          <TableCell>{product.stock}</TableCell>
+                          <TableCell>
+                            <Badge className={getStatusColor(product.status)}>
+                              {product.status.replace("_", " ")}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-2">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => navigate(`/product/${product.id}`)}
+                                title="View"
+                              >
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => navigate(`/admin/login/edit-product/${product.id}`)}
+                                title="Edit"
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => openInventoryModal(product.id, "sale")}
+                                title="Record Offline Sale"
+                              >
+                                <ShoppingCart className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => openInventoryModal(product.id, "restock")}
+                                title="Restock"
+                              >
+                                <Package className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="text-destructive"
+                                onClick={() => handleDeleteProduct(product.id)}
+                                title="Delete"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+
+            </>
           )}
 
           {activeTab === "customers" && (
@@ -482,15 +626,31 @@ const AdminDashboard = () => {
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <label className="text-sm font-medium mb-2 block">Store Name</label>
-                      <Input defaultValue="Anu Gadget" />
+                      <Input
+                        value={settings.storeName}
+                        onChange={(e) => setSettings((prev) => ({ ...prev, storeName: e.target.value }))}
+                      />
                     </div>
                     <div>
                       <label className="text-sm font-medium mb-2 block">Contact Email</label>
-                      <Input defaultValue="support@anugadget.com" />
+                      <Input
+                        value={settings.contactEmail}
+                        onChange={(e) => setSettings((prev) => ({ ...prev, contactEmail: e.target.value }))}
+                      />
                     </div>
                     <div>
                       <label className="text-sm font-medium mb-2 block">Phone Number</label>
-                      <Input defaultValue="+234 812 770 4308" />
+                      <Input
+                        value={settings.phoneNumber}
+                        onChange={(e) => setSettings((prev) => ({ ...prev, phoneNumber: e.target.value }))}
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="text-sm font-medium mb-2 block">Address</label>
+                      <Input
+                        value={settings.address}
+                        onChange={(e) => setSettings((prev) => ({ ...prev, address: e.target.value }))}
+                      />
                     </div>
                     <div>
                       <label className="text-sm font-medium mb-2 block">Currency</label>
@@ -499,11 +659,47 @@ const AdminDashboard = () => {
                   </div>
                 </div>
                 <div className="pt-4 border-t border-border">
-                  <Button className="bg-primary hover:bg-primary/90">Save Changes</Button>
+                  <div className="flex items-center gap-3">
+                    <Button className="bg-primary hover:bg-primary/90" onClick={handleSaveSettings}>
+                      Save Changes
+                    </Button>
+                    {settingsSaved && (
+                      <span className="text-sm text-green-600">Saved.</span>
+                    )}
+                  </div>
                 </div>
               </CardContent>
             </Card>
           )}
+
+          <Dialog open={inventoryOpen} onOpenChange={setInventoryOpen}>
+            <DialogContent className="sm:max-w-[420px]">
+              <DialogHeader>
+                <DialogTitle>
+                  {inventoryMode === "sale" ? "Record Offline Sale" : "Restock Inventory"}
+                </DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Quantity</label>
+                  <Input
+                    type="number"
+                    min="1"
+                    value={inventoryQty}
+                    onChange={(e) => setInventoryQty(e.target.value)}
+                  />
+                </div>
+              </div>
+              <DialogFooter className="gap-2 sm:gap-0">
+                <Button variant="outline" onClick={() => setInventoryOpen(false)}>
+                  Cancel
+                </Button>
+                <Button className="bg-primary hover:bg-primary/90" onClick={handleInventoryUpdate}>
+                  Save
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </main>
       </div>
     </div>

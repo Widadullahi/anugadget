@@ -6,8 +6,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useAdminSettings } from "@/hooks/useAdminSettings";
 
 const Contact = () => {
+  const settings = useAdminSettings();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -19,7 +21,7 @@ const Contact = () => {
     const body = encodeURIComponent(
       `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`
     );
-    window.location.href = `mailto:Gbadamosia21@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${settings.contactEmail}?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -61,7 +63,7 @@ const Contact = () => {
                     <label className="block text-sm font-medium mb-2">Phone</label>
                     <Input
                       type="tel"
-                      placeholder="+234 812 770 4308"
+                      placeholder={settings.phoneNumber}
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                     />
@@ -91,7 +93,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Phone</h3>
-                      <p className="text-muted-foreground">+234 812 770 4308</p>
+                      <p className="text-muted-foreground">{settings.phoneNumber}</p>
                       <p className="text-sm text-muted-foreground">Mon-Sat, 9am-6pm</p>
                     </div>
                   </div>
@@ -102,7 +104,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Email</h3>
-                      <p className="text-muted-foreground">Gbadamosia21@gmail.com</p>
+                      <p className="text-muted-foreground">{settings.contactEmail}</p>
                       <p className="text-sm text-muted-foreground">We'll respond within 24 hours</p>
                     </div>
                   </div>
@@ -113,7 +115,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Location</h3>
-                      <p className="text-muted-foreground">3/9 Olukoleosho Ikeja Mokland Plaza</p>
+                      <p className="text-muted-foreground">{settings.address}</p>
                       <p className="text-sm text-muted-foreground">Visit our showroom</p>
                     </div>
                   </div>

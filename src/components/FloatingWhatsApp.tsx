@@ -1,4 +1,10 @@
+import { useLocation } from "react-router-dom";
+
 const FloatingWhatsApp = () => {
+  const location = useLocation();
+  if (location.pathname.startsWith("/admin")) {
+    return null;
+  }
   return (
     <a
       href="https://wa.me/2348127704308"

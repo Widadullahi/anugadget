@@ -3,8 +3,10 @@ import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin, CreditCard,
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.jpg";
+import { useAdminSettings } from "@/hooks/useAdminSettings";
 
 const Footer = () => {
+  const settings = useAdminSettings();
   const categories = [
     { name: "Phones & Tablets", link: "/shop?category=phones" },
     { name: "Computing & IT", link: "/shop?category=laptops" },
@@ -144,15 +146,15 @@ const Footer = () => {
               <ul className="space-y-3 text-sm text-background/60">
                 <li className="flex items-start gap-2">
                   <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-primary" />
-                  <span>3/9 Olukoleosho Ikeja Mokland Plaza</span>
+                  <span>{settings.address}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Phone className="h-4 w-4 shrink-0 text-primary" />
-                  <span>+234 812 770 4308</span>
+                  <span>{settings.phoneNumber}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Mail className="h-4 w-4 shrink-0 text-primary" />
-                  <span>Gbadamosia21@gmail.com</span>
+                  <span>{settings.contactEmail}</span>
                 </li>
               </ul>
             </div>

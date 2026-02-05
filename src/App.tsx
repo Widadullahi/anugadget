@@ -18,6 +18,8 @@ import Signup from "./pages/Signup";
 import Wishlist from "./pages/Wishlist";
 import ProductDetails from "./pages/ProductDetails";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminAddProduct from "./pages/AdminAddProduct";
+import AdminEditProduct from "./pages/AdminEditProduct";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
@@ -44,7 +46,9 @@ const App = () => (
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/login" element={<AdminDashboard />} />
+            <Route path="/admin/login/add-product" element={<AdminAddProduct />} />
+            <Route path="/admin/login/edit-product/:id" element={<AdminEditProduct />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

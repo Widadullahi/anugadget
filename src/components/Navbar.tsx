@@ -13,14 +13,16 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/hooks/useCart";
 import { useWishlist } from "@/hooks/useWishlist";
+import { useAdminSettings } from "@/hooks/useAdminSettings";
 import logo from "@/assets/logo.jpg";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const { user, isAdmin, signOut } = useAuth();
+  const { user, signOut } = useAuth();
   const { itemCount: cartCount } = useCart();
   const { itemCount: wishlistCount } = useWishlist();
+  const settings = useAdminSettings();
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
@@ -54,7 +56,7 @@ const Navbar = () => {
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1">
               <Phone className="h-3 w-3" />
-              +234 812 770 4308
+              {settings.phoneNumber}
             </span>
             <span className="hidden sm:inline">|</span>
             <span className="hidden sm:inline">Welcome to Anu Gadget</span>
@@ -136,16 +138,6 @@ const Navbar = () => {
                   <DropdownMenuItem asChild>
                     <Link to="/wishlist" className="w-full cursor-pointer">Wishlist</Link>
                   </DropdownMenuItem>
-                  {isAdmin && (
-                    <>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem asChild>
-                        <Link to="/admin" className="w-full cursor-pointer text-primary font-medium">
-                          Admin Dashboard
-                        </Link>
-                      </DropdownMenuItem>
-                    </>
-                  )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
                     <LogOut className="mr-2 h-4 w-4" />
@@ -304,15 +296,6 @@ const Navbar = () => {
                 >
                   Contact
                 </Link>
-                {isAdmin && (
-                  <Link 
-                    to="/admin" 
-                    className="block py-3 px-2 text-base font-medium border-b border-border text-primary hover:underline"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Admin Dashboard
-                  </Link>
-                )}
               </nav>
             </div>
 

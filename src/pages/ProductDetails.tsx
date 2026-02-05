@@ -19,151 +19,7 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import iphone15ProMax from "@/assets/iphone-15-pro-max.jpg";
-import macbookProM3 from "@/assets/macbook-pro-m3.jpg";
-import appleWatchUltra2 from "@/assets/apple-watch-ultra-2.jpg";
-import airpodsPro2 from "@/assets/airpods-pro-2.jpg";
-
-// Mock product data
-const allProducts = [
-  {
-    id: 1,
-    name: "iPhone 15 Pro Max 256GB",
-    price: 1200000,
-    oldPrice: 1450000,
-    discount: 17,
-    images: [iphone15ProMax, iphone15ProMax, iphone15ProMax, iphone15ProMax],
-    category: "Phones & Tablets",
-    brand: "Apple",
-    sku: "APL-IP15PM-256",
-    inStock: true,
-    stockCount: 15,
-    rating: 4.8,
-    reviewCount: 124,
-    description: "The iPhone 15 Pro Max features a stunning 6.7-inch Super Retina XDR display with ProMotion technology. Powered by the A17 Pro chip, it delivers exceptional performance for gaming, photography, and everyday tasks.",
-    specifications: {
-      "Display": "6.7-inch Super Retina XDR",
-      "Processor": "A17 Pro chip",
-      "Storage": "256GB",
-      "RAM": "8GB",
-      "Camera": "48MP Main + 12MP Ultra Wide + 12MP Telephoto",
-      "Battery": "4422 mAh",
-      "OS": "iOS 17",
-      "Connectivity": "5G, Wi-Fi 6E, Bluetooth 5.3",
-      "Weight": "221g",
-      "Color": "Natural Titanium"
-    },
-    features: [
-      "A17 Pro chip with 6-core GPU",
-      "Action button for quick access",
-      "USB-C with USB 3 speeds",
-      "ProRes video recording",
-      "Ceramic Shield front",
-      "IP68 water resistance"
-    ]
-  },
-  {
-    id: 2,
-    name: "MacBook Pro M3 14-inch",
-    price: 2500000,
-    oldPrice: 2850000,
-    discount: 12,
-    images: [macbookProM3, macbookProM3, macbookProM3, macbookProM3],
-    category: "Computing",
-    brand: "Apple",
-    sku: "APL-MBP14-M3",
-    inStock: true,
-    stockCount: 8,
-    rating: 4.9,
-    reviewCount: 89,
-    description: "The MacBook Pro 14-inch with M3 chip delivers exceptional performance for professionals. Featuring a stunning Liquid Retina XDR display and all-day battery life.",
-    specifications: {
-      "Display": "14.2-inch Liquid Retina XDR",
-      "Processor": "Apple M3 chip",
-      "Storage": "512GB SSD",
-      "RAM": "18GB Unified Memory",
-      "Graphics": "10-core GPU",
-      "Battery": "Up to 17 hours",
-      "Ports": "3x Thunderbolt 4, HDMI, SD card, MagSafe 3",
-      "Weight": "1.55 kg"
-    },
-    features: [
-      "M3 chip with 8-core CPU",
-      "ProMotion technology",
-      "1600 nits peak brightness",
-      "Six-speaker sound system",
-      "Studio-quality mics",
-      "1080p FaceTime HD camera"
-    ]
-  },
-  {
-    id: 3,
-    name: "Apple Watch Ultra 2",
-    price: 800000,
-    oldPrice: 950000,
-    discount: 16,
-    images: [appleWatchUltra2, appleWatchUltra2, appleWatchUltra2, appleWatchUltra2],
-    category: "Wearables",
-    brand: "Apple",
-    sku: "APL-AWU2-49",
-    inStock: true,
-    stockCount: 12,
-    rating: 4.7,
-    reviewCount: 67,
-    description: "Apple Watch Ultra 2 is the most rugged and capable Apple Watch ever. Built for extreme adventures, it features the brightest Apple display ever.",
-    specifications: {
-      "Display": "49mm Always-On Retina",
-      "Processor": "S9 SiP",
-      "Storage": "64GB",
-      "Water Resistance": "100m",
-      "Battery": "Up to 36 hours",
-      "Connectivity": "GPS + Cellular",
-      "Case": "Titanium",
-      "Weight": "61.3g"
-    },
-    features: [
-      "3000 nits brightness",
-      "Double tap gesture",
-      "Precision GPS",
-      "Depth gauge & water temp",
-      "86dB Siren",
-      "Crash Detection"
-    ]
-  },
-  {
-    id: 4,
-    name: "AirPods Pro 2nd Gen",
-    price: 250000,
-    oldPrice: 320000,
-    discount: 22,
-    images: [airpodsPro2, airpodsPro2, airpodsPro2, airpodsPro2],
-    category: "Audio",
-    brand: "Apple",
-    sku: "APL-APP2-USB",
-    inStock: true,
-    stockCount: 25,
-    rating: 4.6,
-    reviewCount: 203,
-    description: "AirPods Pro 2nd generation feature the Apple H2 chip for smarter noise cancellation, 3D sound, and more. Now with USB-C charging.",
-    specifications: {
-      "Chip": "Apple H2",
-      "Active Noise Cancellation": "Yes",
-      "Transparency Mode": "Adaptive",
-      "Battery": "6 hours (30 hours with case)",
-      "Charging": "USB-C, MagSafe, Qi",
-      "Water Resistance": "IPX4",
-      "Weight": "5.3g each"
-    },
-    features: [
-      "2x Active Noise Cancellation",
-      "Adaptive Transparency",
-      "Personalized Spatial Audio",
-      "Conversation Awareness",
-      "Touch controls",
-      "Find My integration"
-    ]
-  }
-];
+import { useProducts } from "@/hooks/useProducts";
 
 const reviews = [
   {
@@ -201,7 +57,16 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
 
-  const product = allProducts.find(p => p.id === Number(id)) || allProducts[0];
+  const { products } = useProducts();
+  const product =
+    products.find((p) => p.id === String(id)) ||
+    products[0];
+  const images =
+    product?.images && product.images.length > 0
+      ? product.images
+      : product?.image_url
+        ? [product.image_url]
+        : ["/placeholder.svg"];
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-NG', {
@@ -212,10 +77,26 @@ const ProductDetails = () => {
   };
 
   const handleQuantityChange = (delta: number) => {
-    setQuantity(prev => Math.max(1, Math.min(prev + delta, product.stockCount)));
+    setQuantity((prev) => Math.max(1, prev + delta));
   };
 
-  const relatedProducts = allProducts.filter(p => p.id !== product.id).slice(0, 4);
+  const relatedProducts = products.filter((p) => p.id !== product?.id).slice(0, 4);
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <div className="container px-4 py-16">
+          <Card>
+            <CardContent className="py-16 text-center">
+              <p className="text-muted-foreground">Loading product details...</p>
+            </CardContent>
+          </Card>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -243,20 +124,38 @@ const ProductDetails = () => {
               {/* Main Image */}
               <div className="relative aspect-square bg-muted rounded-lg overflow-hidden border border-border">
                 <img 
-                  src={product.images[selectedImage]} 
-                  alt={product.name}
+                  src={images[selectedImage]} 
+                  alt={product?.name}
                   className="w-full h-full object-contain p-8"
                 />
-                {product.discount && (
+                {product?.original_price && product.original_price > product.price && (
                   <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground text-sm font-bold px-3 py-1">
-                    -{product.discount}% OFF
+                    -{Math.round(((product.original_price - product.price) / product.original_price) * 100)}% OFF
                   </Badge>
+                )}
+                {images.length > 1 && (
+                  <>
+                    <button
+                      onClick={() => setSelectedImage((prev) => (prev - 1 + images.length) % images.length)}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-2 shadow hover:bg-background"
+                      aria-label="Previous image"
+                    >
+                      <ChevronRight className="h-4 w-4 rotate-180" />
+                    </button>
+                    <button
+                      onClick={() => setSelectedImage((prev) => (prev + 1) % images.length)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-2 shadow hover:bg-background"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  </>
                 )}
               </div>
               
               {/* Thumbnail Gallery */}
               <div className="flex gap-3 overflow-x-auto pb-2">
-                {product.images.map((img, idx) => (
+                {images.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedImage(idx)}
@@ -274,13 +173,13 @@ const ProductDetails = () => {
             <div className="space-y-6">
               {/* Brand & Category */}
               <div className="flex items-center gap-2 text-sm">
-                <span className="text-primary font-medium">{product.brand}</span>
+                <span className="text-primary font-medium">{product?.brand || "Anu Gadget"}</span>
                 <span className="text-muted-foreground">|</span>
-                <span className="text-muted-foreground">{product.category}</span>
+                <span className="text-muted-foreground">{product?.category || "Products"}</span>
               </div>
 
               {/* Title */}
-              <h1 className="text-2xl lg:text-3xl font-bold text-foreground">{product.name}</h1>
+              <h1 className="text-2xl lg:text-3xl font-bold text-foreground">{product?.name}</h1>
 
               {/* Rating */}
               <div className="flex items-center gap-3">
@@ -292,43 +191,36 @@ const ProductDetails = () => {
                     />
                   ))}
                 </div>
-                <span className="font-medium">{product.rating}</span>
-                <span className="text-muted-foreground">({product.reviewCount} reviews)</span>
+                <span className="font-medium">4.8</span>
+                <span className="text-muted-foreground">(124 reviews)</span>
               </div>
 
               {/* Price */}
               <div className="space-y-1">
                 <div className="flex items-center gap-4">
-                  <span className="text-3xl font-bold text-primary">{formatPrice(product.price)}</span>
-                  {product.oldPrice && (
-                    <span className="text-xl text-muted-foreground line-through">{formatPrice(product.oldPrice)}</span>
+                  <span className="text-3xl font-bold text-primary">{formatPrice(product?.price || 0)}</span>
+                  {product?.original_price && (
+                    <span className="text-xl text-muted-foreground line-through">{formatPrice(product.original_price)}</span>
                   )}
                 </div>
-                {product.oldPrice && (
+                {product?.original_price && (
                   <p className="text-sm text-green-600 font-medium">
-                    You save: {formatPrice(product.oldPrice - product.price)}
+                    You save: {formatPrice(product.original_price - (product?.price || 0))}
                   </p>
                 )}
               </div>
 
               {/* Stock Status */}
               <div className="flex items-center gap-2">
-                {product.inStock ? (
-                  <>
-                    <Check className="h-5 w-5 text-green-600" />
-                    <span className="text-green-600 font-medium">In Stock</span>
-                    <span className="text-muted-foreground">({product.stockCount} available)</span>
-                  </>
-                ) : (
-                  <span className="text-destructive font-medium">Out of Stock</span>
-                )}
+                <Check className="h-5 w-5 text-green-600" />
+                <span className="text-green-600 font-medium">In Stock</span>
               </div>
 
               {/* SKU */}
-              <p className="text-sm text-muted-foreground">SKU: {product.sku}</p>
+              <p className="text-sm text-muted-foreground">SKU: {product?.id}</p>
 
               {/* Description */}
-              <p className="text-muted-foreground leading-relaxed">{product.description}</p>
+              <p className="text-muted-foreground leading-relaxed">{product?.description || "Premium quality product from Anu Gadget."}</p>
 
               {/* Quantity & Add to Cart */}
               <div className="space-y-4 pt-4 border-t border-border">
@@ -425,12 +317,16 @@ const ProductDetails = () => {
                 <CardContent className="p-6">
                   <h3 className="text-xl font-bold mb-6">Product Specifications</h3>
                   <div className="grid md:grid-cols-2 gap-4">
-                    {Object.entries(product.specifications).map(([key, value]) => (
-                      <div key={key} className="flex border-b border-border pb-3">
-                        <span className="font-medium text-foreground w-1/2">{key}</span>
-                        <span className="text-muted-foreground w-1/2">{value}</span>
-                      </div>
-                    ))}
+                    {product?.specifications ? (
+                      Object.entries(product.specifications).map(([key, value]) => (
+                        <div key={key} className="flex border-b border-border pb-3">
+                          <span className="font-medium text-foreground w-1/2">{key}</span>
+                          <span className="text-muted-foreground w-1/2">{value}</span>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-muted-foreground">Specifications not available for this product.</p>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -441,12 +337,16 @@ const ProductDetails = () => {
                 <CardContent className="p-6">
                   <h3 className="text-xl font-bold mb-6">Key Features</h3>
                   <ul className="grid md:grid-cols-2 gap-4">
-                    {product.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center gap-3">
-                        <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                        <span className="text-muted-foreground">{feature}</span>
-                      </li>
-                    ))}
+                    {product?.features ? (
+                      product.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-center gap-3">
+                          <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                          <span className="text-muted-foreground">{feature}</span>
+                        </li>
+                      ))
+                    ) : (
+                      <p className="text-muted-foreground">Features not available for this product.</p>
+                    )}
                   </ul>
                 </CardContent>
               </Card>

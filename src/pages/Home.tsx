@@ -11,6 +11,7 @@ import iphone15ProMax from "@/assets/iphone-15-pro-max.jpg";
 import macbookProM3 from "@/assets/macbook-pro-m3.jpg";
 import appleWatchUltra2 from "@/assets/apple-watch-ultra-2.jpg";
 import airpodsPro2 from "@/assets/airpods-pro-2.jpg";
+import { useProducts } from "@/hooks/useProducts";
 
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -112,107 +113,10 @@ const Home = () => {
     { name: "Accessories", icon: Wifi, link: "/shop?category=accessories" },
   ];
 
-  const megaDeals = [
-    {
-      id: 1,
-      name: "iPhone 15 Pro Max 256GB",
-      price: 1200000,
-      oldPrice: 1450000,
-      image: iphone15ProMax,
-      discount: 17,
-    },
-    {
-      id: 2,
-      name: "MacBook Pro M3 14-inch",
-      price: 2500000,
-      oldPrice: 2850000,
-      image: macbookProM3,
-      discount: 12,
-    },
-    {
-      id: 3,
-      name: "Apple Watch Ultra 2",
-      price: 800000,
-      oldPrice: 950000,
-      image: appleWatchUltra2,
-      discount: 16,
-    },
-    {
-      id: 4,
-      name: "AirPods Pro 2nd Gen",
-      price: 250000,
-      oldPrice: 320000,
-      image: airpodsPro2,
-      discount: 22,
-    },
-    {
-      id: 5,
-      name: "iPhone 15 Pro 128GB",
-      price: 1100000,
-      oldPrice: 1300000,
-      image: iphone15ProMax,
-      discount: 15,
-    },
-    {
-      id: 6,
-      name: "MacBook Air M2 13-inch",
-      price: 1800000,
-      oldPrice: 2100000,
-      image: macbookProM3,
-      discount: 14,
-    },
-  ];
-
-  const topSellingProducts = [
-    {
-      id: 7,
-      name: "Samsung Galaxy S24 Ultra",
-      price: 1100000,
-      oldPrice: 1250000,
-      image: iphone15ProMax,
-      discount: 12,
-    },
-    {
-      id: 8,
-      name: "Dell XPS 15 Laptop",
-      price: 2200000,
-      oldPrice: 2500000,
-      image: macbookProM3,
-      discount: 12,
-    },
-    {
-      id: 9,
-      name: "Samsung Galaxy Watch 6",
-      price: 350000,
-      oldPrice: 400000,
-      image: appleWatchUltra2,
-      discount: 13,
-    },
-    {
-      id: 10,
-      name: "Sony WH-1000XM5",
-      price: 450000,
-      oldPrice: 520000,
-      image: airpodsPro2,
-      discount: 13,
-    },
-    {
-      id: 11,
-      name: "iPad Pro 12.9-inch M2",
-      price: 1500000,
-      oldPrice: 1700000,
-      image: iphone15ProMax,
-      discount: 12,
-    },
-    {
-      id: 12,
-      name: "HP Spectre x360",
-      price: 1900000,
-      oldPrice: 2150000,
-      image: macbookProM3,
-      discount: 12,
-    },
-  ];
+  const { products } = useProducts();
+  const megaDeals = products.filter(p => p.original_price && p.original_price > p.price).slice(0, 6);
+  const megaDealIds = new Set(megaDeals.map(p => p.id));
+  const topSellingProducts = products.filter(p => !megaDealIds.has(p.id)).slice(0, 6);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-NG', {
@@ -222,50 +126,57 @@ const Home = () => {
     }).format(price);
   };
 
-  const ProductCard = ({ product }: { product: typeof megaDeals[0] }) => (
-    <Card className="group border border-border hover:shadow-lg transition-all bg-background">
-      <CardContent className="p-3">
-        {/* Product Name */}
-        <h3 className="text-primary text-sm font-medium mb-2 line-clamp-2 min-h-[40px] hover:underline cursor-pointer">
-          {product.name}
-        </h3>
-        
-        {/* Product Image */}
-        <div className="relative aspect-square mb-3 bg-muted rounded overflow-hidden">
-          <img 
-            src={product.image} 
-            alt={product.name}
-            className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform"
-          />
-          {product.discount && (
-            <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground text-xs font-bold">
-              -{product.discount}% OFF
-            </Badge>
-          )}
-        </div>
+  const ProductCard = ({ product }: { product: typeof products[number] }) => {
+    const discount = product.original_price && product.original_price > product.price
+      ? Math.round(((product.original_price - product.price) / product.original_price) * 100)
+      : null;
+    const image = product.image_url || "/placeholder.svg";
 
-        {/* Price */}
-        <div className="space-y-1">
-          <p className="text-lg font-bold text-foreground">{formatPrice(product.price)}</p>
-          {product.oldPrice && (
-            <p className="text-sm text-muted-foreground line-through">
-              {formatPrice(product.oldPrice)}
-            </p>
-          )}
-        </div>
+    return (
+      <Card className="group border border-border hover:shadow-lg transition-all bg-background">
+        <CardContent className="p-3">
+          {/* Product Name */}
+          <h3 className="text-primary text-sm font-medium mb-2 line-clamp-2 min-h-[40px] hover:underline cursor-pointer">
+            {product.name}
+          </h3>
+          
+          {/* Product Image */}
+          <div className="relative aspect-square mb-3 bg-muted rounded overflow-hidden">
+            <img 
+              src={image} 
+              alt={product.name}
+              className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform"
+            />
+            {discount && (
+              <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground text-xs font-bold">
+                -{discount}% OFF
+              </Badge>
+            )}
+          </div>
 
-        {/* Quick Actions */}
-        <div className="flex items-center gap-2 mt-3 text-xs">
+          {/* Price */}
+          <div className="space-y-1">
+            <p className="text-lg font-bold text-foreground">{formatPrice(product.price)}</p>
+            {product.original_price && (
+              <p className="text-sm text-muted-foreground line-through">
+                {formatPrice(product.original_price)}
+              </p>
+            )}
+          </div>
+
+          {/* Quick Actions */}
+          <div className="flex items-center gap-2 mt-3 text-xs">
           <Link to={`/product/${product.id}`} className="text-primary hover:underline flex items-center gap-1">
             <Eye className="h-3 w-3" /> Quick View
           </Link>
-          <button className="text-primary hover:underline flex items-center gap-1 ml-auto">
-            <Heart className="h-3 w-3" /> Wishlist
-          </button>
-        </div>
-      </CardContent>
-    </Card>
-  );
+            <button className="text-primary hover:underline flex items-center gap-1 ml-auto">
+              <Heart className="h-3 w-3" /> Wishlist
+            </button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-background">
