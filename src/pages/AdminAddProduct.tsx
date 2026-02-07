@@ -12,10 +12,7 @@ const productCategories = [
   "Wearables",
   "Audio",
   "Gaming",
-  "Accessories",
-  "Appliances",
-  "Power Solutions",
-  "Smart Home"
+  "Accessories"
 ];
 
 const loadProducts = () => {
