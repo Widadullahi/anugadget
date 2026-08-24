@@ -167,7 +167,7 @@ const AdminEditProduct = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-muted/30">
-        <div className="container px-4 py-8">
+        <div className="container py-8">
           <Card className="max-w-3xl mx-auto">
             <CardContent className="py-16 text-center">
               <p className="text-muted-foreground">Loading product...</p>
@@ -181,7 +181,7 @@ const AdminEditProduct = () => {
   if (!product) {
     return (
       <div className="min-h-screen bg-muted/30">
-        <div className="container px-4 py-8">
+        <div className="container py-8">
           <Card className="max-w-3xl mx-auto">
             <CardContent className="py-16 text-center">
               <p className="text-muted-foreground">Product not found.</p>
@@ -197,7 +197,7 @@ const AdminEditProduct = () => {
 
   return (
     <div className="min-h-screen bg-muted/30">
-      <div className="container px-4 py-8">
+      <div className="container py-8">
         <Card className="max-w-3xl mx-auto">
           <CardHeader>
             <CardTitle>Edit Product</CardTitle>

@@ -117,7 +117,7 @@ const AdminAddProduct = () => {
 
   return (
     <div className="min-h-screen bg-muted/30">
-      <div className="container px-4 py-8">
+      <div className="container py-8">
         <Card className="max-w-3xl mx-auto">
           <CardHeader>
             <CardTitle>Add New Product</CardTitle>

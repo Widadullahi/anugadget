@@ -40,7 +40,7 @@ const Blog = () => {
     <div className="min-h-screen">
       <Navbar />
       
-      <div className="container px-4 py-16">
+      <div className="container py-16">
         <div className="max-w-6xl mx-auto">
           <div className="mb-12">
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">Tech Blog</h1>

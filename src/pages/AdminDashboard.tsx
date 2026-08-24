@@ -45,7 +45,7 @@ import iphone15ProMax from "@/assets/iphone-15-pro-max.jpg";
 import macbookProM3 from "@/assets/macbook-pro-m3.jpg";
 import appleWatchUltra2 from "@/assets/apple-watch-ultra-2.jpg";
 import airpodsPro2 from "@/assets/airpods-pro-2.jpg";
-import logo from "@/assets/logo.jpg";
+import logo from "@/assets/logo.png";
 
 // Mock data
 const statsData = [

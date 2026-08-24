@@ -44,7 +44,7 @@ const Cart = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
-        <div className="container px-4 py-16">
+        <div className="container py-16">
           <Card className="max-w-md mx-auto border-border">
             <CardContent className="py-16 text-center">
               <ShoppingBag className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
@@ -68,22 +68,22 @@ const Cart = () => {
       <Navbar />
       
       {/* Breadcrumb */}
-      <div className="bg-muted/50 py-3 border-b border-border">
-        <div className="container px-4">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Link to="/" className="hover:text-primary">Home</Link>
-            <span>/</span>
-            <span className="text-foreground">Shopping Cart</span>
+      <div className="bg-muted/50 py-2 sm:py-3 border-b border-border w-full">
+        <div className="container w-full">
+          <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+            <Link to="/" className="hover:text-primary transition-colors">Home</Link>
+            <span className="text-muted-foreground/50">/</span>
+            <span className="text-foreground font-medium">Shopping Cart</span>
           </div>
         </div>
       </div>
 
-      <div className="container px-4 py-8">
-        <h1 className="text-2xl font-bold mb-6">Shopping Cart ({items.length} items)</h1>
+      <div className="container py-6 sm:py-8 lg:py-10 w-full">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6">Shopping Cart ({items.length} items)</h1>
 
         {isLoading ? (
-          <div className="grid lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 space-y-4">
+          <div className="grid xl:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
+            <div className="xl:col-span-2 space-y-4">
               {[...Array(2)].map((_, i) => (
                 <Card key={i} className="border-border animate-pulse">
                   <CardContent className="p-4">
@@ -111,9 +111,9 @@ const Cart = () => {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid lg:grid-cols-3 gap-6">
+          <div className="grid xl:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
             {/* Cart Items */}
-            <div className="lg:col-span-2 space-y-4">
+            <div className="xl:col-span-2 space-y-4">
               {/* Table Header - Desktop */}
               <div className="hidden md:grid grid-cols-12 gap-4 p-4 bg-muted/50 rounded-lg text-sm font-bold">
                 <div className="col-span-6">Product</div>

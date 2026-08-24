@@ -12,6 +12,7 @@ import macbookProM3 from "@/assets/macbook-pro-m3.jpg";
 import appleWatchUltra2 from "@/assets/apple-watch-ultra-2.jpg";
 import airpodsPro2 from "@/assets/airpods-pro-2.jpg";
 import { useProducts } from "@/hooks/useProducts";
+import { useAdminSettings } from "@/hooks/useAdminSettings";
 
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -113,10 +114,11 @@ const Home = () => {
     { name: "Accessories", icon: Wifi, link: "/shop?category=accessories" },
   ];
 
+  const settings = useAdminSettings();
   const { products } = useProducts();
-  const megaDeals = products.filter(p => p.original_price && p.original_price > p.price).slice(0, 6);
+  const megaDeals = products.filter(p => p.original_price && p.original_price > p.price);
   const megaDealIds = new Set(megaDeals.map(p => p.id));
-  const topSellingProducts = products.filter(p => !megaDealIds.has(p.id)).slice(0, 6);
+  const topSellingProducts = products.filter(p => !megaDealIds.has(p.id));
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-NG', {
@@ -133,44 +135,51 @@ const Home = () => {
     const image = product.image_url || "/placeholder.svg";
 
     return (
-      <Card className="group border border-border hover:shadow-lg transition-all bg-background">
-        <CardContent className="p-3">
-          {/* Product Name */}
-          <h3 className="text-primary text-sm font-medium mb-2 line-clamp-2 min-h-[40px] hover:underline cursor-pointer">
-            {product.name}
-          </h3>
-          
+      <Card className="group border border-border hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 bg-background overflow-hidden rounded-lg">
+        <CardContent className="p-2.5 sm:p-3 lg:p-3.5">
           {/* Product Image */}
-          <div className="relative aspect-square mb-3 bg-muted rounded overflow-hidden">
-            <img 
-              src={image} 
-              alt={product.name}
-              className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform"
-            />
+          <div className="relative aspect-[4/5] sm:aspect-square mb-2 sm:mb-3 bg-muted rounded-md overflow-hidden">
+            <Link to={`/product/${product.id}`}>
+              <img
+                src={image}
+                alt={product.name}
+                className="w-full h-full object-contain p-1.5 sm:p-2 group-hover:scale-110 transition-transform duration-500"
+              />
+            </Link>
             {discount && (
-              <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground text-xs font-bold">
-                -{discount}% OFF
+              <Badge className="absolute top-1.5 sm:top-2 left-1.5 sm:left-2 bg-primary text-primary-foreground text-[10px] sm:text-xs font-bold rounded-full px-1.5 sm:px-2 py-0.5">
+                -{discount}%
               </Badge>
             )}
           </div>
 
+          {/* Product Name */}
+          <Link to={`/product/${product.id}`}>
+            <h3 className="text-[11px] sm:text-xs lg:text-sm font-semibold mb-1.5 line-clamp-2 min-h-[32px] sm:min-h-[40px] hover:text-primary transition-colors">
+              {product.name}
+            </h3>
+          </Link>
+
           {/* Price */}
-          <div className="space-y-1">
-            <p className="text-lg font-bold text-foreground">{formatPrice(product.price)}</p>
+          <div className="space-y-0.5 sm:space-y-1 mb-2 sm:mb-3">
+            <p className="text-sm sm:text-base lg:text-lg font-black text-foreground leading-tight">{formatPrice(product.price)}</p>
             {product.original_price && (
-              <p className="text-sm text-muted-foreground line-through">
+              <p className="text-[10px] sm:text-xs text-muted-foreground line-through">
                 {formatPrice(product.original_price)}
               </p>
             )}
           </div>
 
           {/* Quick Actions */}
-          <div className="flex items-center gap-2 mt-3 text-xs">
-          <Link to={`/product/${product.id}`} className="text-primary hover:underline flex items-center gap-1">
-            <Eye className="h-3 w-3" /> Quick View
-          </Link>
-            <button className="text-primary hover:underline flex items-center gap-1 ml-auto">
-              <Heart className="h-3 w-3" /> Wishlist
+          <div className="flex items-center gap-1 sm:gap-2 text-[10px] sm:text-xs pt-1 sm:pt-2 border-t border-border/60">
+            <Link to={`/product/${product.id}`} className="text-primary hover:underline flex items-center gap-1 font-medium">
+              <Eye className="h-3 w-3 sm:h-3.5 sm:w-3.5" /> View
+            </Link>
+            <button className="text-muted-foreground hover:text-primary flex items-center gap-1 ml-auto transition-colors">
+              <Heart className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+            </button>
+            <button className="text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors">
+              <ShoppingCart className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
             </button>
           </div>
         </CardContent>
@@ -179,50 +188,50 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background w-full">
       <Navbar />
-      
+
       {/* Hero Banner Carousel */}
-      <section className="relative overflow-hidden">
-        <div className="relative">
+      <section className="relative overflow-hidden w-full">
+        <div className="relative w-full">
           {/* Slides */}
-          <div className="relative min-h-[400px] lg:min-h-[450px]">
+          <div className="relative min-h-[340px] sm:min-h-[400px] lg:min-h-[460px] xl:min-h-[500px] 2xl:min-h-[540px]">
             {heroSlides.map((slide, index) => (
               <div
                 key={slide.id}
-                className={`absolute inset-0 transition-all duration-700 ease-in-out ${
-                  index === currentSlide 
-                    ? 'opacity-100 translate-x-0 z-10' 
-                    : index < currentSlide 
-                      ? 'opacity-0 -translate-x-full z-0' 
+                className={`absolute inset-0 transition-all duration-700 ease-in-out w-full ${
+                  index === currentSlide
+                    ? 'opacity-100 translate-x-0 z-10'
+                    : index < currentSlide
+                      ? 'opacity-0 -translate-x-full z-0'
                       : 'opacity-0 translate-x-full z-0'
                 }`}
               >
-                <div className={`h-full bg-gradient-to-r ${slide.gradient}`}>
-                  <div className="container h-full">
-                    <div className="grid lg:grid-cols-2 gap-8 items-center h-full py-12 px-4">
-                      <div className={`space-y-6 text-primary-foreground ${index === currentSlide ? 'animate-fade-in' : ''}`}>
-                        <p className="text-primary-foreground/80 font-medium uppercase tracking-wide text-sm">
+                <div className={`h-full w-full bg-gradient-to-r ${slide.gradient}`}>
+                  <div className="container h-full w-full">
+                    <div className="grid md:grid-cols-5 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center h-full py-8 sm:py-12 lg:py-16">
+                      <div className={`md:col-span-3 space-y-4 sm:space-y-6 text-primary-foreground ${index === currentSlide ? 'animate-fade-in' : ''}`}>
+                        <p className="text-primary-foreground/80 font-medium uppercase tracking-wider text-[11px] sm:text-xs lg:text-sm">
                           {slide.subtitle}
                         </p>
-                        <h1 className="text-3xl lg:text-5xl font-bold leading-tight">
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black leading-[1.1] tracking-tight">
                           {slide.title}
                         </h1>
-                        <Button 
-                          size="lg" 
-                          asChild 
-                          className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full px-8 font-bold"
+                        <Button
+                          size="lg"
+                          asChild
+                          className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full px-6 sm:px-8 lg:px-10 font-bold h-10 sm:h-11 lg:h-12 text-sm lg:text-base shadow-lg shadow-primary/20"
                         >
                           <Link to={slide.buttonLink}>
                             {slide.buttonText}
                           </Link>
                         </Button>
                       </div>
-                      <div className={`relative flex justify-center lg:justify-end ${index === currentSlide ? 'animate-scale-in' : ''}`}>
-                        <img 
-                          src={slide.image} 
+                      <div className={`md:col-span-2 relative hidden md:flex justify-center lg:justify-end ${index === currentSlide ? 'animate-scale-in' : ''}`}>
+                        <img
+                          src={slide.image}
                           alt={slide.title}
-                          className="w-full max-w-md h-auto object-contain rounded-lg"
+                          className="w-full max-w-[360px] lg:max-w-[420px] xl:max-w-[480px] 2xl:max-w-[520px] h-auto object-contain drop-shadow-2xl rounded-lg"
                         />
                       </div>
                     </div>
@@ -235,28 +244,28 @@ const Home = () => {
           {/* Navigation Arrows */}
           <button
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-background/20 backdrop-blur-sm border border-primary-foreground/30 flex items-center justify-center text-primary-foreground hover:bg-background/40 transition-all"
+            className="absolute left-2 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full bg-background/20 backdrop-blur-md border border-primary-foreground/30 flex items-center justify-center text-primary-foreground hover:bg-background/40 hover:scale-105 transition-all shadow-lg"
             aria-label="Previous slide"
           >
-            <ChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
           </button>
           <button
             onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-background/20 backdrop-blur-sm border border-primary-foreground/30 flex items-center justify-center text-primary-foreground hover:bg-background/40 transition-all"
+            className="absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full bg-background/20 backdrop-blur-md border border-primary-foreground/30 flex items-center justify-center text-primary-foreground hover:bg-background/40 hover:scale-105 transition-all shadow-lg"
             aria-label="Next slide"
           >
-            <ChevronRightIcon className="h-5 w-5" />
+            <ChevronRightIcon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
           </button>
-          
+
           {/* Carousel Dots */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+          <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
             {heroSlides.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
                 className={`h-2 rounded-full transition-all duration-300 ${
-                  index === currentSlide 
-                    ? 'w-8 bg-primary-foreground' 
+                  index === currentSlide
+                    ? 'w-8 bg-primary-foreground'
                     : 'w-2 bg-primary-foreground/50 hover:bg-primary-foreground/70'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
@@ -267,13 +276,13 @@ const Home = () => {
       </section>
 
       {/* Corporate Banner */}
-      <section className="bg-muted py-3 border-b border-border">
-        <div className="container px-4">
-          <div className="flex flex-wrap items-center justify-center gap-2 text-center text-sm">
+      <section className="bg-muted py-2 sm:py-3 border-b border-border w-full">
+        <div className="container w-full">
+          <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-2 text-center text-[11px] sm:text-xs lg:text-sm">
             <span className="text-muted-foreground">Special offers on bulk and corporate</span>
-            <span className="font-bold text-primary">Anu Gadget</span>
+            <span className="font-bold text-primary">{settings ? settings.storeName : 'Anu Gadget'}</span>
             <span className="text-muted-foreground">sales</span>
-            <Button variant="outline" size="sm" className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground ml-2 h-7 text-xs">
+            <Button variant="outline" size="sm" className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground ml-1 sm:ml-2 h-6 sm:h-7 text-[10px] sm:text-xs">
               Shop Now!
             </Button>
           </div>
@@ -281,51 +290,51 @@ const Home = () => {
       </section>
 
       {/* Mega Deals Section - Slot Style */}
-      <section className="py-6 px-4 bg-background">
-        <div className="container">
-          <div className="grid lg:grid-cols-4 gap-6">
+      <section className="py-5 sm:py-7 lg:py-10 bg-background w-full">
+        <div className="container w-full">
+          <div className="grid lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
             {/* Left Side - Mega Deal Banner */}
-            <div className="bg-gradient-to-br from-primary to-primary/80 rounded-lg p-6 text-primary-foreground flex flex-col justify-center">
-              <h2 className="text-xl font-bold mb-2">January Mega Deals</h2>
-              <p className="text-sm mb-4 text-primary-foreground/80">Up to:</p>
-              <p className="text-6xl lg:text-7xl font-black mb-4">37%</p>
-              <p className="text-sm mb-4 text-primary-foreground/80">Hurry Up! Offer ends in:</p>
-              
+            <div className="bg-gradient-to-br from-primary to-primary/80 rounded-xl p-5 sm:p-6 lg:p-8 text-primary-foreground flex flex-col justify-center shadow-md lg:col-span-1 xl:col-span-1 min-h-[220px] lg:min-h-0">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-1 sm:mb-2">January Mega Deals</h2>
+              <p className="text-xs sm:text-sm mb-2 sm:mb-4 text-primary-foreground/80">Up to:</p>
+              <p className="text-5xl sm:text-6xl lg:text-7xl font-black mb-2 sm:mb-4 leading-none">37%</p>
+              <p className="text-xs sm:text-sm mb-3 sm:mb-5 text-primary-foreground/80">Hurry Up! Offer ends in:</p>
+
               {/* Countdown Timer */}
-              <div className="grid grid-cols-4 gap-2 text-center">
-                <div className="bg-primary-foreground/10 rounded p-2">
-                  <p className="text-2xl font-bold">{String(countdown.days).padStart(2, '0')}</p>
-                  <p className="text-xs uppercase">Days</p>
+              <div className="grid grid-cols-4 gap-1.5 sm:gap-2 text-center">
+                <div className="bg-primary-foreground/15 rounded-lg p-1.5 sm:p-2 backdrop-blur-sm">
+                  <p className="text-xl sm:text-2xl font-bold leading-none">{String(countdown.days).padStart(2, '0')}</p>
+                  <p className="text-[10px] sm:text-xs uppercase mt-0.5 text-primary-foreground/70">Days</p>
                 </div>
-                <div className="bg-primary-foreground/10 rounded p-2">
-                  <p className="text-2xl font-bold">{String(countdown.hours).padStart(2, '0')}</p>
-                  <p className="text-xs uppercase">Hours</p>
+                <div className="bg-primary-foreground/15 rounded-lg p-1.5 sm:p-2 backdrop-blur-sm">
+                  <p className="text-xl sm:text-2xl font-bold leading-none">{String(countdown.hours).padStart(2, '0')}</p>
+                  <p className="text-[10px] sm:text-xs uppercase mt-0.5 text-primary-foreground/70">Hours</p>
                 </div>
-                <div className="bg-primary-foreground/10 rounded p-2">
-                  <p className="text-2xl font-bold">{String(countdown.minutes).padStart(2, '0')}</p>
-                  <p className="text-xs uppercase">Mins</p>
+                <div className="bg-primary-foreground/15 rounded-lg p-1.5 sm:p-2 backdrop-blur-sm">
+                  <p className="text-xl sm:text-2xl font-bold leading-none">{String(countdown.minutes).padStart(2, '0')}</p>
+                  <p className="text-[10px] sm:text-xs uppercase mt-0.5 text-primary-foreground/70">Mins</p>
                 </div>
-                <div className="bg-primary-foreground/10 rounded p-2">
-                  <p className="text-2xl font-bold">{String(countdown.seconds).padStart(2, '0')}</p>
-                  <p className="text-xs uppercase">Secs</p>
+                <div className="bg-primary-foreground/15 rounded-lg p-1.5 sm:p-2 backdrop-blur-sm">
+                  <p className="text-xl sm:text-2xl font-bold leading-none">{String(countdown.seconds).padStart(2, '0')}</p>
+                  <p className="text-[10px] sm:text-xs uppercase mt-0.5 text-primary-foreground/70">Secs</p>
                 </div>
               </div>
             </div>
 
             {/* Right Side - Products Grid */}
-            <div className="lg:col-span-3">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-4">
-                  <h3 className="font-bold text-lg">Mega Deals</h3>
-                  <span className="h-1 w-20 bg-primary rounded"></span>
+            <div className="lg:col-span-3 xl:col-span-4">
+              <div className="flex items-center justify-between mb-3 sm:mb-5">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <h3 className="font-bold text-base sm:text-lg lg:text-xl">Mega Deals</h3>
+                  <span className="h-1 w-16 sm:w-20 bg-primary rounded-full"></span>
                 </div>
-                <Link to="/shop" className="text-primary hover:underline text-sm flex items-center gap-1">
-                  View All <ArrowRight className="h-4 w-4" />
+                <Link to="/shop" className="text-primary hover:underline text-xs sm:text-sm flex items-center gap-1 font-medium">
+                  View All <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 </Link>
               </div>
-              
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4">
-                {megaDeals.slice(0, 6).map((product) => (
+
+              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4">
+                {megaDeals.slice(0, 8).map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
               </div>
@@ -334,21 +343,21 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Categories Section - Horizontal Scroll */}
-      <section className="py-8 px-4 bg-muted/50 border-y border-border">
-        <div className="container">
-          <h2 className="text-xl font-bold mb-6 text-center">Categories</h2>
-          <div className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide justify-center flex-wrap">
+      {/* Categories Section */}
+      <section className="py-6 sm:py-8 lg:py-10 bg-muted/40 border-y border-border w-full">
+        <div className="container w-full">
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 lg:mb-8 text-center">Shop by Category</h2>
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-9 gap-3 sm:gap-4 lg:gap-5">
             {categories.map((category) => (
-              <Link 
-                key={category.name} 
+              <Link
+                key={category.name}
                 to={category.link}
-                className="flex flex-col items-center gap-2 min-w-[100px] group"
+                className="flex flex-col items-center gap-2 group"
               >
-                <div className="w-20 h-20 rounded-full bg-background border-2 border-border group-hover:border-primary flex items-center justify-center transition-colors shadow-sm">
-                  <category.icon className="h-8 w-8 text-primary" />
+                <div className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-2xl bg-background border-2 border-border group-hover:border-primary group-hover:shadow-lg group-hover:-translate-y-0.5 flex items-center justify-center transition-all duration-300">
+                  <category.icon className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-primary" />
                 </div>
-                <span className="text-xs font-medium text-center text-foreground group-hover:text-primary transition-colors">
+                <span className="text-[10px] sm:text-xs lg:text-[13px] font-semibold text-center text-foreground group-hover:text-primary transition-colors leading-tight">
                   {category.name}
                 </span>
               </Link>
@@ -358,21 +367,21 @@ const Home = () => {
       </section>
 
       {/* Top Selling Products */}
-      <section className="py-8 px-4 bg-background">
-        <div className="container">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-4">
-              <h2 className="text-xl font-bold">Top Selling Products</h2>
-              <span className="h-1 w-20 bg-primary rounded hidden sm:block"></span>
+      <section className="py-6 sm:py-8 lg:py-10 bg-background w-full">
+        <div className="container w-full">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <h2 className="text-base sm:text-lg lg:text-xl font-bold">Top Selling Products</h2>
+              <span className="h-1 w-16 sm:w-20 bg-primary rounded-full hidden sm:block"></span>
             </div>
             <Link to="/shop">
-              <Button variant="outline" className="rounded-full text-sm">
-                View All <ArrowRight className="ml-2 h-4 w-4" />
+              <Button variant="outline" className="rounded-full text-xs sm:text-sm h-8 sm:h-9 px-3 sm:px-4">
+                View All <ArrowRight className="ml-1.5 h-3.5 w-3.5 sm:ml-2 sm:h-4 sm:w-4" />
               </Button>
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-3 sm:gap-4">
             {topSellingProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -381,20 +390,20 @@ const Home = () => {
       </section>
 
       {/* Phones & Tablets Section */}
-      <section className="py-8 px-4 bg-muted/30">
-        <div className="container">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-4">
-              <h2 className="text-xl font-bold">Phones & Tablets</h2>
-              <span className="h-1 w-20 bg-primary rounded hidden sm:block"></span>
+      <section className="py-6 sm:py-8 lg:py-10 bg-muted/30 w-full">
+        <div className="container w-full">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <h2 className="text-base sm:text-lg lg:text-xl font-bold">Phones & Tablets</h2>
+              <span className="h-1 w-16 sm:w-20 bg-primary rounded-full hidden sm:block"></span>
             </div>
-            <Link to="/shop?category=phones" className="text-primary hover:underline text-sm flex items-center gap-1">
-              See All <ArrowRight className="h-4 w-4" />
+            <Link to="/shop?category=phones" className="text-primary hover:underline text-xs sm:text-sm flex items-center gap-1 font-medium">
+              See All <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {megaDeals.slice(0, 6).map((product) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-3 sm:gap-4">
+            {megaDeals.slice(0, 8).map((product) => (
               <ProductCard key={`phone-${product.id}`} product={product} />
             ))}
           </div>
@@ -402,20 +411,20 @@ const Home = () => {
       </section>
 
       {/* Computing Section */}
-      <section className="py-8 px-4 bg-background">
-        <div className="container">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-4">
-              <h2 className="text-xl font-bold">Computing & IT Solutions</h2>
-              <span className="h-1 w-20 bg-primary rounded hidden sm:block"></span>
+      <section className="py-6 sm:py-8 lg:py-10 bg-background w-full">
+        <div className="container w-full">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <h2 className="text-base sm:text-lg lg:text-xl font-bold">Computing & IT Solutions</h2>
+              <span className="h-1 w-16 sm:w-20 bg-primary rounded-full hidden sm:block"></span>
             </div>
-            <Link to="/shop?category=laptops" className="text-primary hover:underline text-sm flex items-center gap-1">
-              See All <ArrowRight className="h-4 w-4" />
+            <Link to="/shop?category=laptops" className="text-primary hover:underline text-xs sm:text-sm flex items-center gap-1 font-medium">
+              See All <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {topSellingProducts.slice(0, 6).map((product) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-3 sm:gap-4">
+            {topSellingProducts.slice(0, 8).map((product) => (
               <ProductCard key={`laptop-${product.id}`} product={product} />
             ))}
           </div>
@@ -423,12 +432,12 @@ const Home = () => {
       </section>
 
       {/* Promo Banner */}
-      <section className="py-6 px-4">
-        <div className="container">
-          <div className="bg-gradient-to-r from-primary to-primary/80 rounded-lg p-8 text-primary-foreground text-center">
-            <h2 className="text-2xl lg:text-3xl font-bold mb-2">Power Deals</h2>
-            <p className="text-lg mb-4">Never Go Dark Again | Power Stations Promo Up to 40% Discount</p>
-            <Button asChild className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full px-8">
+      <section className="py-5 sm:py-7 lg:py-8 w-full">
+        <div className="container w-full">
+          <div className="bg-gradient-to-r from-primary via-primary to-primary/80 rounded-2xl p-6 sm:p-8 lg:p-12 text-primary-foreground text-center shadow-xl">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-black mb-2 sm:mb-3">Power Deals</h2>
+            <p className="text-sm sm:text-base lg:text-lg mb-4 sm:mb-6 text-primary-foreground/90">Never Go Dark Again | Power Stations Promo Up to 40% Discount</p>
+            <Button asChild className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full px-6 sm:px-8 lg:px-10 h-10 sm:h-11 lg:h-12 font-bold shadow-lg shadow-black/20">
               <Link to="/shop?category=power">Hurry Now!</Link>
             </Button>
           </div>
@@ -436,36 +445,36 @@ const Home = () => {
       </section>
 
       {/* Trust Badges */}
-      <section className="py-8 px-4 border-t border-border bg-muted/30">
-        <div className="container">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div>
-              <div className="w-14 h-14 mx-auto mb-3 bg-primary/10 rounded-full flex items-center justify-center">
-                <span className="text-primary text-2xl">✓</span>
+      <section className="py-6 sm:py-8 lg:py-10 border-t border-border bg-muted/30 w-full">
+        <div className="container w-full">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 text-center">
+            <div className="p-3 sm:p-4">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 mx-auto mb-2 sm:mb-3 bg-primary/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span className="text-primary text-xl sm:text-2xl lg:text-3xl">✓</span>
               </div>
-              <h3 className="font-bold text-sm">100% Authentic</h3>
-              <p className="text-xs text-muted-foreground">Genuine products only</p>
+              <h3 className="font-bold text-xs sm:text-sm lg:text-base">100% Authentic</h3>
+              <p className="text-[11px] sm:text-xs lg:text-sm text-muted-foreground mt-0.5">Genuine products only</p>
             </div>
-            <div>
-              <div className="w-14 h-14 mx-auto mb-3 bg-primary/10 rounded-full flex items-center justify-center">
-                <span className="text-primary text-2xl">🚚</span>
+            <div className="p-3 sm:p-4">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 mx-auto mb-2 sm:mb-3 bg-primary/10 rounded-2xl flex items-center justify-center transition-transform">
+                <span className="text-primary text-xl sm:text-2xl lg:text-3xl">🚚</span>
               </div>
-              <h3 className="font-bold text-sm">Fast Delivery</h3>
-              <p className="text-xs text-muted-foreground">Same day in Lagos</p>
+              <h3 className="font-bold text-xs sm:text-sm lg:text-base">Fast Delivery</h3>
+              <p className="text-[11px] sm:text-xs lg:text-sm text-muted-foreground mt-0.5">Same day in Lagos</p>
             </div>
-            <div>
-              <div className="w-14 h-14 mx-auto mb-3 bg-primary/10 rounded-full flex items-center justify-center">
-                <span className="text-primary text-2xl">💰</span>
+            <div className="p-3 sm:p-4">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 mx-auto mb-2 sm:mb-3 bg-primary/10 rounded-2xl flex items-center justify-center transition-transform">
+                <span className="text-primary text-xl sm:text-2xl lg:text-3xl">💰</span>
               </div>
-              <h3 className="font-bold text-sm">Best Prices</h3>
-              <p className="text-xs text-muted-foreground">Competitive pricing</p>
+              <h3 className="font-bold text-xs sm:text-sm lg:text-base">Best Prices</h3>
+              <p className="text-[11px] sm:text-xs lg:text-sm text-muted-foreground mt-0.5">Competitive pricing</p>
             </div>
-            <div>
-              <div className="w-14 h-14 mx-auto mb-3 bg-primary/10 rounded-full flex items-center justify-center">
-                <span className="text-primary text-2xl">🛡️</span>
+            <div className="p-3 sm:p-4">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 mx-auto mb-2 sm:mb-3 bg-primary/10 rounded-2xl flex items-center justify-center transition-transform">
+                <span className="text-primary text-xl sm:text-2xl lg:text-3xl">🛡️</span>
               </div>
-              <h3 className="font-bold text-sm">Secure Payments</h3>
-              <p className="text-xs text-muted-foreground">Safe transactions</p>
+              <h3 className="font-bold text-xs sm:text-sm lg:text-base">Secure Payments</h3>
+              <p className="text-[11px] sm:text-xs lg:text-sm text-muted-foreground mt-0.5">Safe transactions</p>
             </div>
           </div>
         </div>

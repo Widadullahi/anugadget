@@ -86,7 +86,7 @@ const ProductDetails = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
-        <div className="container px-4 py-16">
+        <div className="container py-16">
           <Card>
             <CardContent className="py-16 text-center">
               <p className="text-muted-foreground">Loading product details...</p>
@@ -103,22 +103,22 @@ const ProductDetails = () => {
       <Navbar />
       
       {/* Breadcrumb */}
-      <div className="bg-muted/50 py-3 border-b border-border">
-        <div className="container px-4">
-          <div className="flex items-center gap-2 text-sm">
-            <Link to="/" className="text-muted-foreground hover:text-primary">Home</Link>
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
-            <Link to="/shop" className="text-muted-foreground hover:text-primary">Shop</Link>
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
-            <span className="text-foreground font-medium truncate max-w-[200px]">{product.name}</span>
+      <div className="bg-muted/50 py-2 sm:py-3 border-b border-border w-full">
+        <div className="container w-full">
+          <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm overflow-x-auto scrollbar-hide">
+            <Link to="/" className="text-muted-foreground hover:text-primary transition-colors whitespace-nowrap">Home</Link>
+            <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground shrink-0" />
+            <Link to="/shop" className="text-muted-foreground hover:text-primary transition-colors whitespace-nowrap">Shop</Link>
+            <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground shrink-0" />
+            <span className="text-foreground font-medium truncate max-w-[200px] sm:max-w-[300px]">{product.name}</span>
           </div>
         </div>
       </div>
 
       {/* Product Section */}
-      <section className="py-8 px-4">
-        <div className="container">
-          <div className="grid lg:grid-cols-2 gap-8">
+      <section className="py-6 sm:py-8 lg:py-12 bg-background w-full">
+        <div className="container w-full">
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
             {/* Image Gallery */}
             <div className="space-y-4">
               {/* Main Image */}
@@ -297,7 +297,7 @@ const ProductDetails = () => {
       </section>
 
       {/* Tabs Section */}
-      <section className="py-8 px-4 bg-muted/30">
+      <section className="py-6 sm:py-8 lg:py-10 bg-muted/30 w-full">
         <div className="container">
           <Tabs defaultValue="specifications" className="w-full">
             <TabsList className="w-full justify-start bg-background border border-border rounded-lg p-1 flex-wrap h-auto">
@@ -421,7 +421,7 @@ const ProductDetails = () => {
       </section>
 
       {/* Related Products */}
-      <section className="py-8 px-4 bg-background">
+      <section className="py-6 sm:py-8 lg:py-10 bg-background w-full">
         <div className="container">
           <h2 className="text-xl font-bold mb-6">Related Products</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

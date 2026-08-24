@@ -14,7 +14,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/hooks/useCart";
 import { useWishlist } from "@/hooks/useWishlist";
 import { useAdminSettings } from "@/hooks/useAdminSettings";
-import logo from "@/assets/logo.jpg";
+import logo from "@/assets/logo.png";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -51,26 +51,26 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 w-full">
       {/* Top Bar */}
-      <div className="bg-foreground text-background py-1.5 px-4 text-xs">
-        <div className="container flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1">
+      <div className="bg-foreground text-background py-1.5 text-[11px] sm:text-xs">
+        <div className="container flex justify-between items-center gap-2">
+          <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+            <span className="flex items-center gap-1 shrink-0">
               <Phone className="h-3 w-3" />
-              {settings.phoneNumber}
+              <span className="truncate max-w-[140px] sm:max-w-none">{settings.phoneNumber}</span>
             </span>
-            <span className="hidden sm:inline">|</span>
-            <span className="hidden sm:inline">Welcome to Anu Gadget</span>
+            <span className="hidden sm:inline text-background/40">|</span>
+            <span className="hidden md:inline truncate text-background/70">Welcome to {settings.storeName}</span>
           </div>
-          <div className="flex items-center gap-4">
-            <Link to="/contact" className="flex items-center gap-1 hover:text-primary transition-colors">
+          <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+            <Link to="/contact" className="flex items-center gap-1 hover:text-primary transition-colors shrink-0">
               <MapPin className="h-3 w-3" />
-              Store Locator
+              <span className="hidden sm:inline">Store Locator</span>
             </Link>
-            <span>|</span>
+            <span className="hidden sm:inline text-background/40">|</span>
             {user ? (
-              <span className="text-primary">{user.email}</span>
+              <span className="text-primary truncate max-w-[120px] sm:max-w-none">{user.email}</span>
             ) : (
-              <Link to="/login" className="hover:text-primary transition-colors">
+              <Link to="/login" className="hover:text-primary transition-colors shrink-0">
                 Sign In
               </Link>
             )}
@@ -79,27 +79,41 @@ const Navbar = () => {
       </div>
 
       {/* Main Header */}
-      <div className="bg-background border-b border-border py-3">
-        <div className="container flex items-center justify-between px-4 gap-4">
-          {/* Logo */}
-          <Link to="/" className="flex items-center shrink-0">
-            <img src={logo} alt="Anu Gadget" className="h-12 w-auto" />
+      <div className="bg-background border-b border-border py-3 sm:py-4">
+        <div className="container flex items-center justify-between gap-2 sm:gap-4">
+          {/* Logo + Brand Name */}
+          <Link to="/" className="flex items-center shrink-0 gap-2 sm:gap-3 group">
+            <img
+              src={logo}
+              alt={settings.storeName}
+              className="h-10 sm:h-14 lg:h-16 w-auto drop-shadow-sm group-hover:drop-shadow-md transition-all"
+            />
+            <div className="hidden sm:flex flex-col leading-tight">
+              <span className="font-black text-lg lg:text-xl xl:text-2xl text-foreground tracking-tight">
+                {settings.storeName.split(' ')[0]}
+              </span>
+              {settings.storeName.split(' ').length > 1 && (
+                <span className="font-bold text-[11px] lg:text-xs text-primary uppercase tracking-wider">
+                  {settings.storeName.split(' ').slice(1).join(' ')}
+                </span>
+              )}
+            </div>
           </Link>
 
           {/* Search Bar - Desktop */}
-          <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-xl mx-4">
+          <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-2xl lg:max-w-3xl mx-2 lg:mx-6">
             <div className="relative w-full">
-              <Input 
-                type="search" 
-                placeholder="Search for Products, Brands and Categories" 
+              <Input
+                type="search"
+                placeholder="Search for Products, Brands and Categories"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pr-12 h-11 border-2 border-primary rounded-full text-sm pl-4"
+                className="w-full pr-12 h-11 lg:h-12 border-2 border-primary rounded-full text-sm pl-4"
               />
-              <Button 
+              <Button
                 type="submit"
-                size="icon" 
-                className="absolute right-1 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full"
+                size="icon"
+                className="absolute right-1 top-1/2 -translate-y-1/2 h-9 w-9 lg:h-10 lg:w-10 rounded-full"
               >
                 <Search className="h-4 w-4" />
               </Button>
@@ -107,11 +121,11 @@ const Navbar = () => {
           </form>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-1">
-            <Link to="/wishlist" className="hidden md:flex">
-              <Button variant="ghost" size="sm" className="flex flex-col items-center gap-0.5 h-auto py-1 relative">
+          <div className="flex items-center gap-0.5 sm:gap-1 lg:gap-2">
+            <Link to="/wishlist" className="hidden lg:flex">
+              <Button variant="ghost" size="sm" className="flex flex-col items-center gap-0.5 h-auto py-1 px-2 lg:px-3 relative">
                 <Heart className="h-5 w-5" />
-                <span className="text-xs">Wishlist</span>
+                <span className="text-[10px] lg:text-xs">Wishlist</span>
                 {wishlistCount > 0 && (
                   <span className="absolute -top-0.5 right-1 h-4 w-4 rounded-full bg-primary text-[10px] text-primary-foreground flex items-center justify-center font-bold">
                     {wishlistCount}
@@ -119,13 +133,13 @@ const Navbar = () => {
                 )}
               </Button>
             </Link>
-            
+
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="hidden md:flex flex-col items-center gap-0.5 h-auto py-1">
+                  <Button variant="ghost" size="sm" className="hidden md:flex flex-col items-center gap-0.5 h-auto py-1 px-2 lg:px-3 relative">
                     <User className="h-5 w-5" />
-                    <span className="text-xs">Account</span>
+                    <span className="text-[10px] lg:text-xs">Account</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
@@ -147,54 +161,64 @@ const Navbar = () => {
               </DropdownMenu>
             ) : (
               <Link to="/login" className="hidden md:flex">
-                <Button variant="ghost" size="sm" className="flex flex-col items-center gap-0.5 h-auto py-1">
+                <Button variant="ghost" size="sm" className="flex flex-col items-center gap-0.5 h-auto py-1 px-2 lg:px-3 relative">
                   <User className="h-5 w-5" />
-                  <span className="text-xs">Account</span>
+                  <span className="text-[10px] lg:text-xs">Account</span>
                 </Button>
               </Link>
             )}
-            
+
             <Link to="/cart">
-              <Button variant="ghost" size="sm" className="flex flex-col items-center gap-0.5 h-auto py-1 relative">
+              <Button variant="ghost" size="sm" className="flex flex-col items-center gap-0.5 h-auto py-1 px-2 lg:px-3 relative">
                 <ShoppingCart className="h-5 w-5" />
-                <span className="text-xs">Cart</span>
-                <span className="absolute -top-0.5 right-1 h-4 w-4 rounded-full bg-primary text-[10px] text-primary-foreground flex items-center justify-center font-bold">
+                <span className="hidden sm:inline text-[10px] lg:text-xs">Cart</span>
+                <span className="absolute -top-0.5 right-0.5 sm:right-1 h-4 w-4 rounded-full bg-primary text-[10px] text-primary-foreground flex items-center justify-center font-bold">
                   {cartCount}
                 </span>
               </Button>
             </Link>
-            
-            {/* Mobile Menu Button */}
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="md:hidden ml-2"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              <Menu className="h-6 w-6" />
-            </Button>
+
+            {/* Mobile Search + Menu */}
+            <div className="md:hidden flex items-center gap-1">
+              <Link to="/shop" className="flex">
+                <Button variant="ghost" size="icon" className="h-9 w-9">
+                  <Search className="h-5 w-5" />
+                </Button>
+              </Link>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-9 w-9"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                <Menu className="h-6 w-6" />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Categories Navigation Bar */}
-      <nav className="bg-primary text-primary-foreground">
+      <nav className="bg-primary text-primary-foreground shadow-sm">
         <div className="container">
-          <div className="hidden md:flex items-center">
+          <div className="hidden md:flex items-center gap-0.5">
             {/* All Categories Dropdown */}
-            <div className="bg-primary-foreground/10 px-4 py-3 flex items-center gap-2 cursor-pointer hover:bg-primary-foreground/20 transition-colors">
+            <Link
+              to="/shop"
+              className="bg-primary-foreground/10 px-3 lg:px-4 py-2.5 lg:py-3 flex items-center gap-2 hover:bg-primary-foreground/20 transition-colors rounded-t-sm"
+            >
               <Menu className="h-4 w-4" />
-              <span className="font-medium text-sm">All Categories</span>
+              <span className="font-medium text-xs lg:text-sm whitespace-nowrap">All Categories</span>
               <ChevronDown className="h-4 w-4" />
-            </div>
-            
+            </Link>
+
             {/* Category Links */}
-            <div className="flex items-center">
+            <div className="flex items-center flex-1 min-w-0 overflow-x-auto scrollbar-hide">
               {categories.map((category) => (
-                <Link 
+                <Link
                   key={category.name}
                   to={category.link}
-                  className="px-4 py-3 text-sm font-medium hover:bg-primary-foreground/10 transition-colors"
+                  className="px-3 lg:px-4 py-2.5 lg:py-3 text-xs lg:text-sm font-medium hover:bg-primary-foreground/10 transition-colors whitespace-nowrap"
                 >
                   {category.name}
                 </Link>
@@ -202,11 +226,11 @@ const Navbar = () => {
             </div>
 
             {/* Right side links */}
-            <div className="ml-auto flex items-center">
-              <Link to="/about" className="px-4 py-3 text-sm font-medium hover:bg-primary-foreground/10 transition-colors">
+            <div className="flex items-center shrink-0">
+              <Link to="/about" className="px-3 lg:px-4 py-2.5 lg:py-3 text-xs lg:text-sm font-medium hover:bg-primary-foreground/10 transition-colors whitespace-nowrap">
                 About Us
               </Link>
-              <Link to="/contact" className="px-4 py-3 text-sm font-medium hover:bg-primary-foreground/10 transition-colors">
+              <Link to="/contact" className="px-3 lg:px-4 py-2.5 lg:py-3 text-xs lg:text-sm font-medium hover:bg-primary-foreground/10 transition-colors whitespace-nowrap">
                 Contact
               </Link>
             </div>

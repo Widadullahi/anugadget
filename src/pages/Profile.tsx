@@ -6,7 +6,7 @@ const Profile = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <div className="container px-4 py-16">
+      <div className="container py-16">
         <div className="max-w-3xl mx-auto">
           <Card>
             <CardContent className="pt-6">

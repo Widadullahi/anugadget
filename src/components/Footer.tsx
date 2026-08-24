@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin, CreditCard, Shield, Truck } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/logo.jpg";
+import logo from "@/assets/logo.png";
 import { useAdminSettings } from "@/hooks/useAdminSettings";
 
 const Footer = () => {
@@ -19,20 +19,20 @@ const Footer = () => {
   return (
     <footer className="bg-foreground text-background">
       {/* Newsletter Section */}
-      <div className="bg-primary py-6">
-        <div className="container px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-primary-foreground text-center md:text-left">
-              <h3 className="font-bold text-lg">Subscribe to our Newsletter</h3>
-              <p className="text-sm text-primary-foreground/80">Get updates on new products and exclusive deals</p>
+      <div className="bg-primary py-5 sm:py-6 lg:py-7">
+        <div className="container">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
+            <div className="text-primary-foreground text-center md:text-left flex-1">
+              <h3 className="font-bold text-base sm:text-lg lg:text-xl">Subscribe to our Newsletter</h3>
+              <p className="text-xs sm:text-sm text-primary-foreground/80 mt-1">Get updates on new products and exclusive deals</p>
             </div>
-            <div className="flex gap-2 w-full md:w-auto">
-              <Input 
-                type="email" 
-                placeholder="Enter your email" 
-                className="bg-primary-foreground text-foreground border-0 rounded-full w-full md:w-72"
+            <div className="flex gap-2 w-full md:w-auto md:min-w-[420px] lg:min-w-[480px]">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                className="bg-primary-foreground text-foreground border-0 rounded-full w-full h-10 sm:h-11"
               />
-              <Button className="bg-foreground text-background hover:bg-foreground/90 rounded-full px-6">
+              <Button className="bg-foreground text-background hover:bg-foreground/90 rounded-full px-5 sm:px-7 h-10 sm:h-11 whitespace-nowrap">
                 Subscribe
               </Button>
             </div>
@@ -41,35 +41,35 @@ const Footer = () => {
       </div>
 
       {/* Features Banner */}
-      <div className="bg-foreground/95 py-6 border-b border-background/10">
-        <div className="container px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div className="bg-foreground/95 py-5 sm:py-6 lg:py-8 border-b border-background/10">
+        <div className="container">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 text-center">
             <div className="flex flex-col items-center gap-2">
-              <Truck className="h-8 w-8 text-primary" />
+              <Truck className="h-7 w-7 sm:h-8 sm:w-8 text-primary" />
               <div>
-                <h4 className="font-bold text-sm">Fast Delivery</h4>
-                <p className="text-xs text-background/60">Same day in Lagos</p>
+                <h4 className="font-bold text-xs sm:text-sm">Fast Delivery</h4>
+                <p className="text-[11px] sm:text-xs text-background/60">Same day in Lagos</p>
               </div>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <Shield className="h-8 w-8 text-primary" />
+              <Shield className="h-7 w-7 sm:h-8 sm:w-8 text-primary" />
               <div>
-                <h4 className="font-bold text-sm">100% Authentic</h4>
-                <p className="text-xs text-background/60">Genuine products</p>
+                <h4 className="font-bold text-xs sm:text-sm">100% Authentic</h4>
+                <p className="text-[11px] sm:text-xs text-background/60">Genuine products</p>
               </div>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <CreditCard className="h-8 w-8 text-primary" />
+              <CreditCard className="h-7 w-7 sm:h-8 sm:w-8 text-primary" />
               <div>
-                <h4 className="font-bold text-sm">Secure Payment</h4>
-                <p className="text-xs text-background/60">Multiple options</p>
+                <h4 className="font-bold text-xs sm:text-sm">Secure Payment</h4>
+                <p className="text-[11px] sm:text-xs text-background/60">Multiple options</p>
               </div>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <Phone className="h-8 w-8 text-primary" />
+              <Phone className="h-7 w-7 sm:h-8 sm:w-8 text-primary" />
               <div>
-                <h4 className="font-bold text-sm">24/7 Support</h4>
-                <p className="text-xs text-background/60">Always available</p>
+                <h4 className="font-bold text-xs sm:text-sm">24/7 Support</h4>
+                <p className="text-[11px] sm:text-xs text-background/60">Always available</p>
               </div>
             </div>
           </div>
@@ -77,13 +77,13 @@ const Footer = () => {
       </div>
 
       {/* Main Footer */}
-      <div className="py-10 px-4">
+      <div className="py-8 sm:py-10 lg:py-14">
         <div className="container">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-10">
             {/* About */}
-            <div className="col-span-2 md:col-span-1">
-              <img src={logo} alt="Anu Gadget" className="h-12 mb-4 bg-background rounded p-1" />
-              <p className="text-background/60 text-sm mb-4 leading-relaxed">
+            <div className="col-span-2 sm:col-span-3 lg:col-span-1">
+              <img src={logo} alt="Anu Gadget" className="h-11 sm:h-12 mb-3 sm:mb-4 bg-background rounded p-1" />
+              <p className="text-background/60 text-xs sm:text-sm mb-4 leading-relaxed">
                 Your trusted destination for premium electronics and gadgets in Nigeria. 100% authentic products guaranteed.
               </p>
               <div className="flex gap-2">
@@ -104,8 +104,8 @@ const Footer = () => {
 
             {/* Categories */}
             <div>
-              <h3 className="font-bold text-sm mb-4 uppercase tracking-wide">Categories</h3>
-              <ul className="space-y-2 text-sm text-background/60">
+              <h3 className="font-bold text-xs sm:text-sm mb-3 sm:mb-4 uppercase tracking-wide">Categories</h3>
+              <ul className="space-y-2 text-xs sm:text-sm text-background/60">
                 {categories.map((category) => (
                   <li key={category.name}>
                     <Link to={category.link} className="hover:text-primary transition-colors">
@@ -118,8 +118,8 @@ const Footer = () => {
 
             {/* Quick Links */}
             <div>
-              <h3 className="font-bold text-sm mb-4 uppercase tracking-wide">Quick Links</h3>
-              <ul className="space-y-2 text-sm text-background/60">
+              <h3 className="font-bold text-xs sm:text-sm mb-3 sm:mb-4 uppercase tracking-wide">Quick Links</h3>
+              <ul className="space-y-2 text-xs sm:text-sm text-background/60">
                 <li><Link to="/" className="hover:text-primary transition-colors">Home</Link></li>
                 <li><Link to="/shop" className="hover:text-primary transition-colors">Shop</Link></li>
                 <li><Link to="/about" className="hover:text-primary transition-colors">About Us</Link></li>
@@ -130,8 +130,8 @@ const Footer = () => {
 
             {/* Customer Service */}
             <div>
-              <h3 className="font-bold text-sm mb-4 uppercase tracking-wide">Customer Service</h3>
-              <ul className="space-y-2 text-sm text-background/60">
+              <h3 className="font-bold text-xs sm:text-sm mb-3 sm:mb-4 uppercase tracking-wide">Customer Service</h3>
+              <ul className="space-y-2 text-xs sm:text-sm text-background/60">
                 <li><Link to="/faq" className="hover:text-primary transition-colors">FAQ</Link></li>
                 <li><Link to="/shipping" className="hover:text-primary transition-colors">Shipping Info</Link></li>
                 <li><Link to="/returns" className="hover:text-primary transition-colors">Returns Policy</Link></li>
@@ -141,9 +141,9 @@ const Footer = () => {
             </div>
 
             {/* Contact */}
-            <div>
-              <h3 className="font-bold text-sm mb-4 uppercase tracking-wide">Contact Us</h3>
-              <ul className="space-y-3 text-sm text-background/60">
+            <div className="col-span-2 sm:col-span-1">
+              <h3 className="font-bold text-xs sm:text-sm mb-3 sm:mb-4 uppercase tracking-wide">Contact Us</h3>
+              <ul className="space-y-3 text-xs sm:text-sm text-background/60">
                 <li className="flex items-start gap-2">
                   <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-primary" />
                   <span>{settings.address}</span>
@@ -163,10 +163,10 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-background/10 py-4 px-4">
-        <div className="container flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-background/50">
+      <div className="border-t border-background/10 py-3 sm:py-4">
+        <div className="container flex flex-col md:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-background/50">
           <p>&copy; {new Date().getFullYear()} Anu Gadget. All rights reserved.</p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
             <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
             <Link to="/cookies" className="hover:text-primary transition-colors">Cookie Policy</Link>

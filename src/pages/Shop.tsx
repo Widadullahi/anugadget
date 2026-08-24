@@ -217,18 +217,18 @@ const Shop = () => {
       <Navbar />
       
       {/* Breadcrumb */}
-      <div className="bg-muted/50 py-3 border-b border-border">
-        <div className="container px-4">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Link to="/" className="hover:text-primary">Home</Link>
-            <span>/</span>
-            <span className="text-foreground">Shop</span>
+      <div className="bg-muted/50 py-2 sm:py-3 border-b border-border">
+        <div className="container w-full">
+          <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+            <Link to="/" className="hover:text-primary transition-colors">Home</Link>
+            <span className="text-muted-foreground/50">/</span>
+            <span className="text-foreground font-medium">Shop</span>
           </div>
         </div>
       </div>
 
-      <div className="container px-4 py-6">
-        <div className="grid lg:grid-cols-4 gap-6">
+      <div className="container py-5 sm:py-7 lg:py-8 w-full">
+        <div className="grid lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6 lg:gap-8">
           {/* Filters Sidebar */}
           <aside className="space-y-4">
             {/* Search Bar */}
@@ -403,7 +403,7 @@ const Shop = () => {
           </aside>
 
           {/* Products Grid */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 xl:col-span-4 w-full">
             {/* Active Filters */}
             {hasActiveFilters && (
               <div className="flex flex-wrap gap-2 mb-4">
@@ -482,14 +482,14 @@ const Shop = () => {
 
             {/* Products Grid */}
             {isLoading ? (
-              <div className={`grid gap-4 ${viewMode === 'grid' ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-3' : 'grid-cols-1'}`}>
-                {[...Array(6)].map((_, i) => (
+              <div className={`grid gap-3 sm:gap-4 ${viewMode === 'grid' ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5' : 'grid-cols-1'}`}>
+                {[...Array(10)].map((_, i) => (
                   <Card key={i} className="border-border">
-                    <CardContent className="p-3">
+                    <CardContent className="p-2.5 sm:p-3">
                       <Skeleton className="h-4 w-3/4 mb-2" />
-                      <Skeleton className="aspect-square mb-3" />
-                      <Skeleton className="h-6 w-1/2 mb-2" />
-                      <Skeleton className="h-8 w-full" />
+                      <Skeleton className="aspect-[4/5] sm:aspect-square mb-3 rounded-md" />
+                      <Skeleton className="h-6 w-2/3 mb-2" />
+                      <Skeleton className="h-9 w-full rounded-full" />
                     </CardContent>
                   </Card>
                 ))}
@@ -499,7 +499,7 @@ const Shop = () => {
                 <CardContent className="py-16 text-center">
                   <p className="text-xl font-bold mb-2">No products found</p>
                   <p className="text-muted-foreground mb-4">
-                    {hasActiveFilters 
+                    {hasActiveFilters
                       ? "Try adjusting your filters or search query."
                       : "Check back later for new products."
                     }
@@ -512,74 +512,76 @@ const Shop = () => {
                 </CardContent>
               </Card>
             ) : (
-              <div className={`grid gap-4 ${viewMode === 'grid' ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-3' : 'grid-cols-1'}`}>
+              <div className={`grid gap-3 sm:gap-4 ${viewMode === 'grid' ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5' : 'grid-cols-1'}`}>
                 {filteredProducts.map((product) => {
                   const discount = getDiscountPercent(product.price, product.original_price);
                   return (
-                    <Card key={product.id} className="group border border-border hover:shadow-lg transition-all bg-background">
-                      <CardContent className="p-3">
-                        {/* Product Name */}
-                        <Link to={`/product/${product.id}`}>
-                          <h3 className="text-primary text-sm font-medium mb-2 line-clamp-2 min-h-[40px] hover:underline cursor-pointer">
-                            {product.name}
-                          </h3>
-                        </Link>
-                        
+                    <Card key={product.id} className="group border border-border hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 bg-background overflow-hidden rounded-lg">
+                      <CardContent className="p-2.5 sm:p-3 lg:p-3.5">
                         {/* Product Image */}
-                        <div className="relative aspect-square mb-3 bg-muted rounded overflow-hidden">
-                          <img 
-                            src={product.image_url || '/placeholder.svg'} 
-                            alt={product.name}
-                            className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform"
-                          />
+                        <div className="relative aspect-[4/5] sm:aspect-square mb-2 sm:mb-3 bg-muted rounded-md overflow-hidden">
+                          <Link to={`/product/${product.id}`}>
+                            <img
+                              src={product.image_url || '/placeholder.svg'}
+                              alt={product.name}
+                              className="w-full h-full object-contain p-1.5 sm:p-2 group-hover:scale-110 transition-transform duration-500"
+                            />
+                          </Link>
                           {discount && (
-                            <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground text-xs font-bold">
-                              -{discount}% OFF
+                            <Badge className="absolute top-1.5 sm:top-2 left-1.5 sm:left-2 bg-primary text-primary-foreground text-[10px] sm:text-xs font-bold rounded-full px-1.5 sm:px-2 py-0.5">
+                              -{discount}%
                             </Badge>
                           )}
                         </div>
 
+                        {/* Product Name */}
+                        <Link to={`/product/${product.id}`}>
+                          <h3 className="text-[11px] sm:text-xs lg:text-sm font-semibold mb-1.5 line-clamp-2 min-h-[32px] sm:min-h-[40px] hover:text-primary transition-colors">
+                            {product.name}
+                          </h3>
+                        </Link>
+
                         {/* Price */}
-                        <div className="space-y-1">
-                          <p className="text-lg font-bold text-foreground">{formatPrice(product.price)}</p>
+                        <div className="space-y-0.5 sm:space-y-1 mb-2 sm:mb-3">
+                          <p className="text-sm sm:text-base lg:text-lg font-black text-foreground leading-tight">{formatPrice(product.price)}</p>
                           {product.original_price && product.original_price > product.price && (
-                            <p className="text-sm text-muted-foreground line-through">
+                            <p className="text-[10px] sm:text-xs text-muted-foreground line-through">
                               {formatPrice(product.original_price)}
                             </p>
                           )}
                         </div>
 
                         {/* Add to Cart Button */}
-                        <Button 
-                          className="w-full mt-3 rounded-full" 
+                        <Button
+                          className="w-full rounded-full h-9 sm:h-10 text-xs sm:text-sm"
                           size="sm"
                           onClick={() => handleAddToCart(product.id)}
                           disabled={addingToCart === product.id}
                         >
                           {addingToCart === product.id ? (
                             <>
-                              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                              <Loader2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 sm:mr-2 animate-spin" />
                               Adding...
                             </>
                           ) : (
                             <>
-                              <ShoppingCart className="h-4 w-4 mr-2" />
+                              <ShoppingCart className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
                               Add to Cart
                             </>
                           )}
                         </Button>
 
                         {/* Quick Actions */}
-                        <div className="flex items-center gap-2 mt-3 text-xs">
-                          <Link to={`/product/${product.id}`} className="text-primary hover:underline flex items-center gap-1">
-                            <Eye className="h-3 w-3" /> Quick View
+                        <div className="flex items-center justify-between mt-2 sm:mt-3 pt-1 sm:pt-2 border-t border-border/60 text-[10px] sm:text-xs">
+                          <Link to={`/product/${product.id}`} className="text-primary hover:underline flex items-center gap-1 font-medium">
+                            <Eye className="h-3 w-3 sm:h-3.5 sm:w-3.5" /> View
                           </Link>
-                          <button 
-                            className={`flex items-center gap-1 ml-auto hover:underline ${isInWishlist(product.id) ? 'text-destructive' : 'text-primary'}`}
+                          <button
+                            className={`flex items-center gap-1 transition-colors ${isInWishlist(product.id) ? 'text-destructive' : 'text-muted-foreground hover:text-primary'}`}
                             onClick={() => handleWishlistToggle(product.id)}
+                            title={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
                           >
-                            <Heart className={`h-3 w-3 ${isInWishlist(product.id) ? 'fill-current' : ''}`} /> 
-                            {isInWishlist(product.id) ? 'Remove' : 'Wishlist'}
+                            <Heart className={`h-3 w-3 sm:h-3.5 sm:w-3.5 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
                           </button>
                         </div>
                       </CardContent>
