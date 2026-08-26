@@ -46,6 +46,7 @@ const Navbar = () => {
     { name: "Audio", link: "/shop?category=audio" },
     { name: "Gaming", link: "/shop?category=gaming" },
     { name: "Accessories", link: "/shop?category=accessories" },
+    { name: "Vehicles", link: "/cars/vehicles" },
   ];
 
   return (

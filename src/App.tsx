@@ -22,6 +22,9 @@ import AdminAddProduct from "./pages/AdminAddProduct";
 import AdminEditProduct from "./pages/AdminEditProduct";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import CarsLanding from "./pages/CarsLanding";
+import CarsGadgets from "./pages/CarsGadgets";
+import CarsVehicles from "./pages/CarsVehicles";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +48,9 @@ const App = () => (
             <Route path="/signup" element={<Signup />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/cars" element={<CarsLanding />} />
+            <Route path="/cars/gadgets" element={<CarsGadgets />} />
+            <Route path="/cars/vehicles" element={<CarsVehicles />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/admin/login" element={<AdminDashboard />} />
             <Route path="/admin/login/add-product" element={<AdminAddProduct />} />

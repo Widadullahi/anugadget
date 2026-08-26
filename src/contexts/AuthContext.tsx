@@ -9,7 +9,7 @@ interface AuthContextType {
   session: Session | null;
   isLoading: boolean;
   isAdmin: boolean;
-  signUp: (email: string, password: string, fullName: string) => Promise<{ error: Error | null }>;
+  signUp: (email: string, password: string, fullName: string, birthday?: string, gender?: string) => Promise<{ error: Error | null }>;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
 }
@@ -72,15 +72,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  const signUp = async (email: string, password: string, fullName: string) => {
-    const { error } = await supabase.auth.signUp({
+  const signUp = async (email: string, password: string, fullName: string, birthday?: string, gender?: string) => {
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        data: { full_name: fullName },
+        data: { full_name: fullName, birthday, gender },
         emailRedirectTo: window.location.origin,
       },
     });
+
+    // Try to create/ensure a customer record for marketing/notifications
+    // This is safe to call even if the user isn't fully confirmed yet.
+    try {
+      await supabase.from("customers").upsert(
+        {
+          user_id: data?.user?.id ?? null,
+          email,
+          full_name: fullName,
+          birthday,
+          gender,
+          subscribed: true,
+        },
+        { onConflict: ["email"] }
+      );
+    } catch (e) {
+      // ignore insert errors on client side; server worker can reconcile
+      console.warn("Failed to upsert customer record:", e);
+    }
 
     return { error };
   };

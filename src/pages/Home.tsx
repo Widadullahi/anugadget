@@ -4,8 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { ArrowRight, ShoppingCart, Heart, Eye, Smartphone, Laptop, Watch, Headphones, Tv, Gamepad2, Battery, Home as HomeIcon, Wifi, ChevronLeft, ChevronRight as ChevronRightIcon } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ThreeGadgetScene from "@/components/ThreeGadgetScene";
+import ThreeVehicleScene from "@/components/ThreeVehicleScene";
 import heroBanner from "@/assets/hero-banner.jpg";
 import iphone15ProMax from "@/assets/iphone-15-pro-max.jpg";
 import macbookProM3 from "@/assets/macbook-pro-m3.jpg";
@@ -188,89 +189,40 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background w-full">
-      <Navbar />
+    <div className="min-h-screen w-full">
 
-      {/* Hero Banner Carousel */}
-      <section className="relative overflow-hidden w-full">
-        <div className="relative w-full">
-          {/* Slides */}
-          <div className="relative min-h-[340px] sm:min-h-[400px] lg:min-h-[460px] xl:min-h-[500px] 2xl:min-h-[540px]">
-            {heroSlides.map((slide, index) => (
-              <div
-                key={slide.id}
-                className={`absolute inset-0 transition-all duration-700 ease-in-out w-full ${
-                  index === currentSlide
-                    ? 'opacity-100 translate-x-0 z-10'
-                    : index < currentSlide
-                      ? 'opacity-0 -translate-x-full z-0'
-                      : 'opacity-0 translate-x-full z-0'
-                }`}
-              >
-                <div className={`h-full w-full bg-gradient-to-r ${slide.gradient}`}>
-                  <div className="container h-full w-full">
-                    <div className="grid md:grid-cols-5 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center h-full py-8 sm:py-12 lg:py-16">
-                      <div className={`md:col-span-3 space-y-4 sm:space-y-6 text-primary-foreground ${index === currentSlide ? 'animate-fade-in' : ''}`}>
-                        <p className="text-primary-foreground/80 font-medium uppercase tracking-wider text-[11px] sm:text-xs lg:text-sm">
-                          {slide.subtitle}
-                        </p>
-                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black leading-[1.1] tracking-tight">
-                          {slide.title}
-                        </h1>
-                        <Button
-                          size="lg"
-                          asChild
-                          className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full px-6 sm:px-8 lg:px-10 font-bold h-10 sm:h-11 lg:h-12 text-sm lg:text-base shadow-lg shadow-primary/20"
-                        >
-                          <Link to={slide.buttonLink}>
-                            {slide.buttonText}
-                          </Link>
-                        </Button>
-                      </div>
-                      <div className={`md:col-span-2 relative hidden md:flex justify-center lg:justify-end ${index === currentSlide ? 'animate-scale-in' : ''}`}>
-                        <img
-                          src={slide.image}
-                          alt={slide.title}
-                          className="w-full max-w-[360px] lg:max-w-[420px] xl:max-w-[480px] 2xl:max-w-[520px] h-auto object-contain drop-shadow-2xl rounded-lg"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+      {/* Luxury Hero with Animated Choices */}
+      <section className="relative w-full">
+        <div className="fixed inset-0 bg-[#D4AF37]" />
+        <div className="relative min-h-screen flex items-center justify-center">
+          <div className="absolute top-14 text-center w-full z-20">
+            <h2 className="text-2xl md:text-3xl text-gray-800 font-semibold">Which of our stuff would you like to explore today?</h2>
           </div>
+          <style>{`
+            @keyframes slideInLeft { from { transform: translate3d(-120%, 0, -100px) rotateY(12deg); opacity: 0 } to { transform: translate3d(0,0,0) rotateY(0); opacity: 1 }}
+            @keyframes slideInRight { from { transform: translate3d(120%, 0, -100px) rotateY(-12deg); opacity: 0 } to { transform: translate3d(0,0,0) rotateY(0); opacity: 1 }}
+            .gold-hero-box { width: 420px; height: 360px; border-radius: 18px; background: rgba(255,255,255,0.06); backdrop-filter: blur(6px); box-shadow: 0 20px 50px rgba(0,0,0,0.35); display:flex; flex-direction:column; padding:28px; }
+            .scene-3d { width:100%; height:180px; border-radius:10px; background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); transform-style: preserve-3d; perspective: 1200px }
+          `}</style>
 
-          {/* Navigation Arrows */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-2 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full bg-background/20 backdrop-blur-md border border-primary-foreground/30 flex items-center justify-center text-primary-foreground hover:bg-background/40 hover:scale-105 transition-all shadow-lg"
-            aria-label="Previous slide"
-          >
-            <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full bg-background/20 backdrop-blur-md border border-primary-foreground/30 flex items-center justify-center text-primary-foreground hover:bg-background/40 hover:scale-105 transition-all shadow-lg"
-            aria-label="Next slide"
-          >
-            <ChevronRightIcon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
-          </button>
+          <div className="flex flex-col md:flex-row gap-8 items-center z-20 px-6">
+            <div onClick={() => window.location.assign('/cars/gadgets')} className="gold-hero-box cursor-pointer transform-gpu relative overflow-hidden" style={{ animation: 'slideInLeft 700ms cubic-bezier(.2,.9,.2,1) 120ms both' }}>
+              <img src={iphone15ProMax} alt="gadget" className="absolute inset-0 w-full h-full object-cover opacity-20" />
+              <h2 className="text-3xl font-extrabold text-gray-800 mb-2 relative z-10">Gadgets</h2>
+              <p className="text-sm text-gray-700 mb-4 relative z-10">Explore latest phones, wearables and electronics.</p>
+              <div className="scene-3d flex items-center justify-center relative z-10">
+                <div className="w-full h-full"><ThreeGadgetScene /></div>
+              </div>
+            </div>
 
-          {/* Carousel Dots */}
-          <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-            {heroSlides.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  index === currentSlide
-                    ? 'w-8 bg-primary-foreground'
-                    : 'w-2 bg-primary-foreground/50 hover:bg-primary-foreground/70'
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
+            <div onClick={() => window.location.assign('/cars/vehicles')} className="gold-hero-box cursor-pointer transform-gpu relative overflow-hidden" style={{ animation: 'slideInRight 700ms cubic-bezier(.2,.9,.2,1) 220ms both' }}>
+              <img src={heroBanner} alt="vehicle" className="absolute inset-0 w-full h-full object-cover opacity-20" />
+              <h2 className="text-3xl font-extrabold text-gray-800 mb-2 relative z-10">Vehicles</h2>
+              <p className="text-sm text-gray-700 mb-4 relative z-10">Discover premium vehicles with cinematic visuals.</p>
+              <div className="scene-3d flex items-center justify-center relative z-10">
+                <div className="w-full h-full"><ThreeVehicleScene /></div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
