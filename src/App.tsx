@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import Home from "./pages/Home";
+import Landing from "./pages/Landing";
+import Vehicles from "./pages/Vehicles";
 import Shop from "./pages/Shop";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -22,9 +24,6 @@ import AdminAddProduct from "./pages/AdminAddProduct";
 import AdminEditProduct from "./pages/AdminEditProduct";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
-import CarsLanding from "./pages/CarsLanding";
-import CarsGadgets from "./pages/CarsGadgets";
-import CarsVehicles from "./pages/CarsVehicles";
 
 const queryClient = new QueryClient();
 
@@ -36,7 +35,9 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/gadgets" element={<Home />} />
+            <Route path="/vehicles" element={<Vehicles />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
@@ -48,9 +49,6 @@ const App = () => (
             <Route path="/signup" element={<Signup />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/cars" element={<CarsLanding />} />
-            <Route path="/cars/gadgets" element={<CarsGadgets />} />
-            <Route path="/cars/vehicles" element={<CarsVehicles />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/admin/login" element={<AdminDashboard />} />
             <Route path="/admin/login/add-product" element={<AdminAddProduct />} />
