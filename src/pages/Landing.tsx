@@ -44,7 +44,7 @@ export default function Landing() {
     <main className="explore-page">
       <div className="page-container">
         <motion.div className="brand" initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-          <img className="brand-logo" src="/logo.png" alt="Anu Gadget" />
+          <img className="brand-logo" src="/whitelogo.png" alt="Anu Gadget" />
           <h2>ANU GADGET</h2>
           <p>Premium Gadgets. Luxury Vehicles.</p>
         </motion.div>
