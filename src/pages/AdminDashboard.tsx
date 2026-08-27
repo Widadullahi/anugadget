@@ -121,13 +121,13 @@ const AdminDashboard = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "completed": return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300";
-      case "processing": return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300";
-      case "pending": return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300";
-      case "shipped": return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300";
-      case "active": return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300";
-      case "out_of_stock": return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300";
-      default: return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300";
+      case "completed": return "bg-primary/10 text-primary";
+      case "processing": return "bg-primary/15 text-primary";
+      case "pending": return "bg-muted text-muted-foreground";
+      case "shipped": return "bg-primary/20 text-primary";
+      case "active": return "bg-primary/10 text-primary";
+      case "out_of_stock": return "bg-destructive/10 text-destructive";
+      default: return "bg-muted text-muted-foreground";
     }
   };
 
@@ -279,7 +279,7 @@ const AdminDashboard = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
-              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">
+              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-sm">
                 A
               </div>
             </div>
@@ -299,7 +299,7 @@ const AdminDashboard = () => {
                         <div>
                           <p className="text-sm text-muted-foreground">{stat.title}</p>
                           <p className="text-2xl font-bold mt-1">{stat.value}</p>
-                          <div className={`flex items-center gap-1 mt-2 text-sm ${stat.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
+                          <div className={`flex items-center gap-1 mt-2 text-sm ${stat.trend === 'up' ? 'text-primary' : 'text-destructive'}`}>
                             {stat.trend === 'up' ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
                             <span>{stat.change}</span>
                             <span className="text-muted-foreground">vs last month</span>
@@ -385,7 +385,7 @@ const AdminDashboard = () => {
                           <img src={product.image} alt="" className="w-10 h-10 rounded object-cover" />
                           <div className="flex-1 min-w-0">
                             <p className="font-medium truncate">{product.name}</p>
-                            <p className={`text-sm ${product.stock === 0 ? 'text-red-600' : 'text-yellow-600'}`}>
+                            <p className={`text-sm ${product.stock === 0 ? 'text-destructive' : 'text-primary'}`}>
                               {product.stock === 0 ? 'Out of stock' : `${product.stock} left`}
                             </p>
                           </div>
@@ -664,7 +664,7 @@ const AdminDashboard = () => {
                       Save Changes
                     </Button>
                     {settingsSaved && (
-                      <span className="text-sm text-green-600">Saved.</span>
+                      <span className="text-sm text-primary font-medium">Saved.</span>
                     )}
                   </div>
                 </div>

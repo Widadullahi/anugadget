@@ -217,7 +217,7 @@ const Shop = () => {
       <Navbar />
       
       {/* Breadcrumb */}
-      <div className="bg-muted/50 py-2 sm:py-3 border-b border-border">
+      <div className="bg-muted/30 py-2 sm:py-3 border-b border-border">
         <div className="container w-full">
           <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
             <Link to="/" className="hover:text-primary transition-colors">Home</Link>

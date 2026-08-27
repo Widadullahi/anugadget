@@ -86,18 +86,11 @@ const Navbar = () => {
             <img
               src={logo}
               alt={settings.storeName}
-              className="h-10 sm:h-14 lg:h-16 w-auto drop-shadow-sm group-hover:drop-shadow-md transition-all"
+              className="h-10 sm:h-12 lg:h-14 w-auto drop-shadow-sm group-hover:drop-shadow-md transition-all"
             />
-            <div className="hidden sm:flex flex-col leading-tight">
-              <span className="font-black text-lg lg:text-xl xl:text-2xl text-foreground tracking-tight">
-                {settings.storeName.split(' ')[0]}
-              </span>
-              {settings.storeName.split(' ').length > 1 && (
-                <span className="font-bold text-[11px] lg:text-xs text-primary uppercase tracking-wider">
-                  {settings.storeName.split(' ').slice(1).join(' ')}
-                </span>
-              )}
-            </div>
+            <span className="hidden sm:block text-[#38bdf8] text-sm lg:text-base xl:text-lg font-bold uppercase tracking-[0.4em]">
+              {settings.storeName}
+            </span>
           </Link>
 
           {/* Search Bar - Desktop */}

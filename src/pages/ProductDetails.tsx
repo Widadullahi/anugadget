@@ -204,7 +204,7 @@ const ProductDetails = () => {
                   )}
                 </div>
                 {product?.original_price && (
-                  <p className="text-sm text-green-600 font-medium">
+                  <p className="text-sm text-primary font-medium">
                     You save: {formatPrice(product.original_price - (product?.price || 0))}
                   </p>
                 )}
@@ -212,8 +212,8 @@ const ProductDetails = () => {
 
               {/* Stock Status */}
               <div className="flex items-center gap-2">
-                <Check className="h-5 w-5 text-green-600" />
-                <span className="text-green-600 font-medium">In Stock</span>
+                <Check className="h-5 w-5 text-primary" />
+                <span className="text-primary font-medium">In Stock</span>
               </div>
 
               {/* SKU */}
@@ -391,7 +391,7 @@ const ProductDetails = () => {
                               <p className="font-medium">{review.name}</p>
                               <div className="flex items-center gap-2">
                                 {review.verified && (
-                                  <Badge variant="outline" className="text-xs text-green-600 border-green-600">
+                                  <Badge variant="outline" className="text-xs text-primary border-primary">
                                     Verified Purchase
                                   </Badge>
                                 )}
