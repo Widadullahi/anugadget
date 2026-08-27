@@ -11,13 +11,13 @@ const FloatingWhatsApp = () => {
       target="_blank"
       rel="noreferrer"
       aria-label="Chat on WhatsApp"
-      className="fixed bottom-5 right-5 z-50 h-14 w-14 rounded-full shadow-lg transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400"
+      className="fixed bottom-5 right-5 z-50 h-14 w-14 rounded-full shadow-lg transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400"
     >
       <svg viewBox="0 0 64 64" aria-hidden="true" className="h-14 w-14">
         <defs>
           <radialGradient id="waGreen" cx="30%" cy="30%" r="75%">
-            <stop offset="0%" stopColor="#4fe06f" />
-            <stop offset="100%" stopColor="#25d366" />
+            <stop offset="0%" stopColor="#e6c64f" />
+            <stop offset="100%" stopColor="#d4af37" />
           </radialGradient>
         </defs>
         <circle cx="32" cy="32" r="30" fill="url(#waGreen)" />
