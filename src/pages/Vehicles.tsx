@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
-  Car,
-  Gauge,
   ShieldCheck,
   Award,
   Fuel,
@@ -10,85 +9,10 @@ import {
   ArrowRight,
   MapPin,
   Clock,
-  CheckCircle2,
 } from "lucide-react";
 import VehiclesFooter from "@/components/VehiclesFooter";
 import VehicleHero from "@/components/VehicleHero";
-
-const vehicles = [
-  {
-    id: 1,
-    name: "Mercedes-Benz S-Class",
-    category: "Sedan",
-    price: "₦85,000,000",
-    image: "/vehicle.png",
-    year: 2024,
-    engine: "3.0L Inline-6 Turbo",
-    power: "429 HP",
-    speed: "0-100 in 4.9s",
-    features: ["AMG Line Package", "Burmester 4D Surround", "MBUX Hyperscreen", "Rear-Axle Steering"],
-  },
-  {
-    id: 2,
-    name: "BMW X7 M60i",
-    category: "SUV",
-    price: "₦72,000,000",
-    image: "/vehicle.png",
-    year: 2024,
-    engine: "4.4L V8 Twin-Turbo",
-    power: "523 HP",
-    speed: "0-100 in 4.7s",
-    features: ["M Sport Package", "Sky Lounge Panorama", "Driving Assistant Pro", "Air Suspension"],
-  },
-  {
-    id: 3,
-    name: "Range Rover Autobiography",
-    category: "SUV",
-    price: "₦95,000,000",
-    image: "/vehicle.png",
-    year: 2024,
-    engine: "4.4L V8 Twin-Turbo",
-    power: "523 HP",
-    speed: "0-100 in 4.6s",
-    features: ["Executive Class Seats", "Meridian Signature Sound", "Terrain Response 2", "Pixel LED Lights"],
-  },
-  {
-    id: 4,
-    name: "Porsche Cayenne Turbo GT",
-    category: "SUV",
-    price: "₦110,000,000",
-    image: "/vehicle.png",
-    year: 2024,
-    engine: "4.0L V8 Twin-Turbo",
-    power: "631 HP",
-    speed: "0-100 in 3.3s",
-    features: ["Sport Chrono Package", "PASM Chassis", "Ceramic Brakes", "Race-Tex Interior"],
-  },
-  {
-    id: 5,
-    name: "Lexus LM",
-    category: "MPV",
-    price: "₦65,000,000",
-    image: "/vehicle.png",
-    year: 2024,
-    engine: "2.4L Turbo Hybrid",
-    power: "371 HP",
-    speed: "0-100 in 6.2s",
-    features: ["Ottoman Seats", "14\" Rear Display", "Climate Concierge", "Mark Levinson Audio"],
-  },
-  {
-    id: 6,
-    name: "Bentley Continental GT",
-    category: "Coupe",
-    price: "₦120,000,000",
-    image: "/vehicle.png",
-    year: 2024,
-    engine: "6.0L W12 Twin-Turbo",
-    power: "650 HP",
-    speed: "0-100 in 3.6s",
-    features: ["Rotating Display", "Naim Audio", "Mulliner Driving Spec", "Diamond Knurling"],
-  },
-];
+import { vehicles } from "@/data/vehicles";
 
 const features = [
   { icon: ShieldCheck, title: "Certified Pre-Owned", desc: "Every vehicle undergoes a 200+ point inspection" },
@@ -97,20 +21,58 @@ const features = [
   { icon: Fuel, title: "Warranty Included", desc: "Comprehensive warranty coverage for your peace of mind" },
 ];
 
-const stats = [
-  { value: "500+", label: "Vehicles Sold" },
-  { value: "98%", label: "Client Satisfaction" },
-  { value: "15+", label: "Years Experience" },
-  { value: "50+", label: "Luxury Brands" },
+const brandLogos = [
+  "/brands/mercedes-benz.png",
+  "/brands/bmw.png",
+  "/brands/audi-logo-2016.png",
+  "/brands/porsche-logo-2014.png",
+  "/brands/bentley-logo-2025.png",
+  "/brands/lexus.png",
+  "/brands/toyota.png",
+  "/brands/tesla.png",
+  "/brands/lamborghini.png",
+  "/brands/lotus-logo-2019.png",
+  "/brands/maserati-logo-2020.png",
+  "/brands/mclaren-logo-2018.png",
+  "/brands/aston-martin-logo-2021.png",
+  "/brands/bugatti-logo-2022.png",
+  "/brands/koenigsegg-logo-2020.png",
+  "/brands/land-rover-logo-2021.png",
+  "/brands/jaguar-logo-2021.png",
+  "/brands/maybach-logo-1997.png",
+  "/brands/genesis-logo-2020.png",
+  "/brands/infiniti-logo-2023.png",
+  "/brands/nio-logo-2016.png",
+  "/brands/rivian-logo-2018.png",
+  "/brands/acura-logo-1989.png",
+  "/brands/cadillac-logo-2021.png",
+  "/brands/chevrolet-logo-2013.png",
+  "/brands/dodge-logo.png",
+  "/brands/ferrari-logo.png",
+  "/brands/ford.png",
+  "/brands/honda.png",
+  "/brands/hyundai-logo-2011.png",
+  "/brands/kia-logo-2021.png",
+  "/brands/lincoln-logo-2012.png",
+  "/brands/mazda-logo-2018.v.png",
+  "/brands/mitsubishi-logo-1985.png",
+  "/brands/nissan-logo-2020.png",
+  "/brands/subaru.png",
+  "/brands/volkswagen-logo.png",
+  "/brands/volvo-logo-2021.png",
 ];
 
 const Vehicles = () => {
-  const [activeSlide, setActiveSlide] = useState(0);
+  const [featured, setFeatured] = useState(() => Math.floor(Math.random() * vehicles.length));
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % vehicles.length);
-    }, 5000);
+      setFeatured((prev) => {
+        let next = Math.floor(Math.random() * vehicles.length);
+        if (next === prev) next = (next + 1) % vehicles.length;
+        return next;
+      });
+    }, 6000);
     return () => clearInterval(timer);
   }, []);
 
@@ -118,139 +80,78 @@ const Vehicles = () => {
     <div className="min-h-screen bg-white text-gray-900 overflow-x-hidden">
       <VehicleHero />
 
-      {/* Stats Bar */}
-      <section className="relative border-y border-gray-100 bg-gradient-to-r from-gray-50 via-white to-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-gray-100">
-            {stats.map((stat, i) => (
-              <div
-                key={i}
-                className="py-8 sm:py-10 text-center"
-                style={{ animation: `fadeInUp 0.6s ease-out ${0.1 * i}s both` }}
-              >
-                <p className="text-3xl sm:text-4xl font-black bg-gradient-to-b from-[#d4af37] to-[#a8862a] bg-clip-text text-transparent">
-                  {stat.value}
-                </p>
-                <p className="text-xs text-gray-400 mt-1 tracking-wider uppercase">{stat.label}</p>
+      {/* Brand Marquee */}
+      <section className="relative border-y border-gray-100 bg-cover bg-center bg-fixed"
+        style={{ backgroundImage: "url(/vehiclebackground.png)" }}>
+        <div className="absolute inset-0 bg-white/90" />
+
+        {/* Logo Track */}
+        <div className="relative overflow-hidden py-8 sm:py-10">
+          <div className="flex w-max items-center" style={{ animation: "brandScroll 45s linear infinite" }}>
+            {[...brandLogos, ...brandLogos].map((src, i) => (
+              <div key={i} className="flex-shrink-0 w-28 sm:w-40 md:w-44 lg:w-56 flex items-center justify-center px-2">
+                <img alt="" src={src} className="h-9 sm:h-12 md:h-14 lg:h-16 w-auto max-w-full object-contain" />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Featured Vehicle Carousel */}
-      <section className="py-20 sm:py-28 relative bg-white" id="inventory">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Section Header */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-12">
-            <div>
-              <p className="text-[#d4af37] text-xs font-bold tracking-[0.2em] uppercase mb-2">Our Collection</p>
-              <h2 className="text-3xl sm:text-4xl font-black text-gray-900">
-                Featured{" "}
-                <span className="bg-gradient-to-r from-[#d4af37] to-[#f0d772] bg-clip-text text-transparent">
-                  Vehicles
-                </span>
-              </h2>
-            </div>
-            <div className="flex gap-2">
-              {vehicles.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveSlide(i)}
-                  className={`h-1 transition-all duration-300 ${
-                    i === activeSlide ? "bg-gradient-to-r from-[#d4af37] to-[#f0d772] w-14" : "bg-gray-200 hover:bg-gray-300 w-10"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Featured Display */}
-          <div className="relative bg-gradient-to-br from-gray-50 to-white border border-gray-200 p-6 sm:p-10 lg:p-14 shadow-lg shadow-black/5">
-            {/* Corner Accents */}
-            <div className="absolute top-0 left-0 w-16 h-16 border-t border-l border-[#d4af37]/30" />
-            <div className="absolute top-0 right-0 w-16 h-16 border-t border-r border-[#d4af37]/30" />
-            <div className="absolute bottom-0 left-0 w-16 h-16 border-b border-l border-[#d4af37]/30" />
-            <div className="absolute bottom-0 right-0 w-16 h-16 border-b border-r border-[#d4af37]/30" />
-
-            <div className="grid lg:grid-cols-2 gap-10 items-center">
-              {/* Vehicle Image */}
-              <div className="relative group">
-                <div className="absolute inset-0 bg-[#d4af37]/10 blur-[60px] rounded-full group-hover:bg-[#d4af37]/20 transition-all duration-700" />
-                <img
-                  src={vehicles[activeSlide].image}
-                  alt={vehicles[activeSlide].name}
-                  className="relative w-full max-w-lg mx-auto drop-shadow-xl transition-all duration-700 hover:scale-105"
-                />
-                {/* Category Badge */}
-                <div className="absolute top-4 left-4 px-3 py-1 bg-gradient-to-r from-[#d4af37] to-[#f0d772] text-black text-[10px] font-bold tracking-wider uppercase shadow-lg shadow-[#d4af37]/20">
-                  {vehicles[activeSlide].category}
-                </div>
-                {/* Year Badge */}
-                <div className="absolute top-4 right-4 px-3 py-1 border border-[#d4af37]/30 text-[#d4af37] text-[10px] font-bold tracking-wider bg-white/80 backdrop-blur-sm">
-                  {vehicles[activeSlide].year}
-                </div>
-              </div>
-
-              {/* Vehicle Info */}
-              <div className="space-y-6">
-                <div>
-                  <p className="text-[#d4af37] text-xs font-bold tracking-[0.15em] uppercase mb-2">
-                    {vehicles[activeSlide].year} Model
-                  </p>
-                  <h3 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">
-                    {vehicles[activeSlide].name}
-                  </h3>
-                  <p className="text-2xl font-bold bg-gradient-to-r from-[#d4af37] to-[#f0d772] bg-clip-text text-transparent">
-                    {vehicles[activeSlide].price}
-                  </p>
-                </div>
-
-                {/* Quick Specs */}
-                <div className="grid grid-cols-3 gap-3">
-                  {[
-                    { icon: Gauge, label: "Power", value: vehicles[activeSlide].power },
-                    { icon: Car, label: "Engine", value: vehicles[activeSlide].engine },
-                    { icon: Gauge, label: "0-100", value: vehicles[activeSlide].speed },
-                  ].map((spec, i) => (
-                    <div key={i} className="bg-gray-50 border border-gray-200 p-3 text-center rounded-lg">
-                      <spec.icon className="h-5 w-5 text-[#d4af37] mx-auto mb-1.5" />
-                      <p className="text-[10px] text-gray-400 uppercase tracking-wider">{spec.label}</p>
-                      <p className="text-xs font-bold text-gray-800 mt-0.5">{spec.value}</p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Features */}
-                <div className="space-y-2">
-                  <p className="text-xs text-gray-400 uppercase tracking-wider font-bold">Key Features</p>
-                  <div className="grid grid-cols-2 gap-2">
-                    {vehicles[activeSlide].features.map((feature, i) => (
-                      <div key={i} className="flex items-center gap-2 text-sm text-gray-600">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-[#d4af37] shrink-0" />
-                        {feature}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Actions */}
-                <div className="flex flex-wrap gap-3 pt-2">
-                  <button className="px-6 py-2.5 bg-gradient-to-r from-[#d4af37] to-[#f0d772] text-black text-xs font-bold tracking-wider uppercase hover:from-[#f0d772] hover:to-[#e6c64f] transition-all shadow-lg shadow-[#d4af37]/20 rounded-lg">
-                    Enquire Now
-                  </button>
-                  <button className="px-6 py-2.5 border border-[#d4af37]/30 text-[#d4af37] text-xs font-bold tracking-wider uppercase hover:bg-[#d4af37]/10 transition-all rounded-lg">
-                    View Details
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* Featured Vehicle — Manga-style Showcase Hero */}
+      <section
+        id="inventory"
+        className="relative h-screen min-h-[640px] w-full overflow-hidden flex items-center justify-center bg-[#0f1012]"
+      >
+        {/* Background Image — the featured car's own photo */}
+        <div key={featured} className="absolute inset-0 z-0 hero-fade">
+          <img
+            src={vehicles[featured].image}
+            alt={vehicles[featured].name}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/55 z-10 pointer-events-none" />
         </div>
+
+        {/* Centered Content */}
+        <div key={featured} className="relative z-20 text-center px-6 hero-fade pointer-events-auto">
+          <p className="text-[#cfa78a] text-[10px] sm:text-xs uppercase tracking-[0.35em] font-medium mb-5">
+            {vehicles[featured].subtitle}
+          </p>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif font-semibold text-[#f5f5f0] leading-tight tracking-tight">
+            {vehicles[featured].name.toUpperCase()}
+            <br />
+            <span className="text-2xl sm:text-3xl md:text-4xl italic text-[#cfa78a] font-normal tracking-normal block mt-4">
+              {vehicles[featured].highlight}
+            </span>
+          </h2>
+          <Link
+            to="/inventory"
+            className="mt-10 inline-block px-10 py-4 border border-[#f5f5f0]/30 text-[#f5f5f0] text-xs uppercase tracking-[0.25em] transition-all duration-500 hover:bg-[#cfa78a] hover:border-[#cfa78a] hover:text-[#0f1012] backdrop-blur-sm cursor-pointer"
+          >
+            View Full Collection
+          </Link>
+        </div>
+
+        {/* Slide Indicators */}
+        <div className="absolute bottom-24 md:bottom-32 flex space-x-4 z-30">
+          {vehicles.map((_, d) => (
+            <button
+              key={d}
+              onClick={() => setFeatured(d)}
+              aria-label={`Go to slide ${d + 1}`}
+              className={`h-[2px] transition-all duration-700 ease-in-out cursor-pointer ${
+                d === featured ? "w-12 bg-[#cfa78a]" : "w-4 bg-[#cfa78a]/30 hover:bg-[#cfa78a]/70"
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Bottom Fade */}
+        <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-[#0f1012] via-[#0f1012]/60 to-transparent z-10 pointer-events-none" />
       </section>
 
       {/* Vehicle Grid */}
-      <section className="py-20 sm:py-28 relative bg-white">
+      <section id="inventory-grid" className="py-20 sm:py-28 relative bg-white scroll-mt-20">
         {/* Background Image */}
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/vehiclebackground.png)" }} />
         <div className="absolute inset-0 bg-white/90" />
@@ -259,15 +160,18 @@ const Vehicles = () => {
           <div className="text-center mb-14">
             <p className="text-[#d4af37] text-xs font-bold tracking-[0.2em] uppercase mb-2">Browse</p>
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900">
-              Full{" "}
+              Our{" "}
               <span className="bg-gradient-to-r from-[#d4af37] to-[#f0d772] bg-clip-text text-transparent">
-                Inventory
+                Collection
               </span>
             </h2>
+            <p className="text-gray-500 text-sm mt-3">
+              A curated selection from our showroom — view the full inventory in the store.
+            </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {vehicles.map((vehicle, i) => (
+            {vehicles.slice(0, 6).map((vehicle, i) => (
               <div
                 key={vehicle.id}
                 className="group bg-white border border-gray-200 hover:border-[#d4af37]/40 hover:shadow-xl hover:shadow-[#d4af37]/10 transition-all duration-500 overflow-hidden rounded-xl"
@@ -278,7 +182,7 @@ const Vehicles = () => {
                   <img
                     src={vehicle.image}
                     alt={vehicle.name}
-                    className="w-full h-full object-contain p-6 group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute top-3 left-3 px-2.5 py-0.5 bg-gradient-to-r from-[#d4af37] to-[#f0d772] text-black text-[10px] font-bold tracking-wider uppercase rounded-md shadow-md">
                     {vehicle.category}
@@ -324,17 +228,29 @@ const Vehicles = () => {
               </div>
             ))}
           </div>
+
+          <div className="mt-12 text-center">
+            <Link
+              to="/inventory"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-[#d4af37] to-[#f0d772] text-black text-xs font-bold tracking-wider uppercase hover:from-[#f0d772] hover:to-[#e6c64f] transition-all shadow-lg shadow-[#d4af37]/20 rounded-full"
+            >
+              View Full Inventory
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 sm:py-28 relative bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 sm:py-28 relative">
+        <div className="absolute inset-0 bg-cover bg-fixed bg-center" style={{ backgroundImage: "url(/sectionbackground.png)" }} />
+        <div className="absolute inset-0 bg-black/25" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <p className="text-[#d4af37] text-xs font-bold tracking-[0.2em] uppercase mb-2">Why Choose Us</p>
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900">
+            <p className="text-[#f5f5f0]/90 text-xs font-bold tracking-[0.2em] uppercase mb-2">Why Choose Us</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#f5f5f0]">
               The{" "}
-              <span className="bg-gradient-to-r from-[#d4af37] to-[#f0d772] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#f0d772] to-[#d4af37] bg-clip-text text-transparent">
                 Anu
               </span>{" "}
               Difference
@@ -493,11 +409,16 @@ const Vehicles = () => {
           from { opacity: 0; transform: translateY(-20px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes speedLine {
-          0% { transform: translateX(-100%); opacity: 0; }
-          20% { opacity: 1; }
-          80% { opacity: 1; }
-          100% { transform: translateX(200%); opacity: 0; }
+        @keyframes brandScroll {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+        .hero-fade {
+          animation: heroFade 1.1s ease forwards;
+        }
+        @keyframes heroFade {
+          from { opacity: 0; transform: scale(1.02); }
+          to { opacity: 1; transform: scale(1); }
         }
       `}</style>
     </div>

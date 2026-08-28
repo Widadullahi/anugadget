@@ -8,6 +8,7 @@ import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import Home from "./pages/Home";
 import Landing from "./pages/Landing";
 import Vehicles from "./pages/Vehicles";
+import Inventory from "./pages/Inventory";
 import Shop from "./pages/Shop";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/" element={<Landing />} />
             <Route path="/gadgets" element={<Home />} />
             <Route path="/vehicles" element={<Vehicles />} />
+            <Route path="/inventory" element={<Inventory />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
