@@ -276,16 +276,18 @@ const Vehicles = () => {
       </section>
 
       {/* Financing CTA */}
-      <section className="py-20 sm:py-28 bg-gradient-to-b from-gray-50 to-white" id="financing">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-[#d4af37] text-xs font-bold tracking-[0.2em] uppercase mb-3">Flexible Options</p>
-          <h2 className="text-3xl sm:text-5xl font-black text-gray-900 mb-6">
+      <section className="py-20 sm:py-28 relative" id="financing">
+        <div className="absolute inset-0 bg-cover bg-fixed bg-center" style={{ backgroundImage: "url(/sectionbackground.png)" }} />
+        <div className="absolute inset-0 bg-black/25" />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-[#f5f5f0]/90 text-xs font-bold tracking-[0.2em] uppercase mb-3">Flexible Options</p>
+          <h2 className="text-3xl sm:text-5xl font-black text-[#f5f5f0] mb-6">
             Premium{" "}
-            <span className="bg-gradient-to-r from-[#d4af37] to-[#f0d772] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#f0d772] to-[#d4af37] bg-clip-text text-transparent">
               Financing
             </span>
           </h2>
-          <p className="text-gray-500 max-w-xl mx-auto mb-10 leading-relaxed">
+          <p className="text-[#f5f5f0]/80 max-w-xl mx-auto mb-10 leading-relaxed">
             Drive your dream car today with our tailored financing plans. Competitive rates, flexible terms, and a seamless process from approval to delivery.
           </p>
           <div className="grid sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
