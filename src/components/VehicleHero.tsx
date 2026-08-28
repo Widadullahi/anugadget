@@ -12,7 +12,7 @@ import {
 
 import carImage from "/car.png";
 import bgImage from "/vehiclebackground.png";
-import logo from "/logo.png";
+import logo from "/whitelogo.png";
 
 import "./VehicleHero.css";
 
@@ -161,8 +161,8 @@ const VehicleHero = () => {
               />
               <path
                 d="M100 15 L182 55 L182 120 Q182 174 100 207 Q18 174 18 120 L18 55 Z"
-                fill="rgba(10,123,179,0.06)"
-                stroke="rgba(10,123,179,0.15)"
+                fill="rgba(213,174,82,0.06)"
+                stroke="rgba(213,174,82,0.15)"
                 strokeWidth="1"
               />
             </svg>

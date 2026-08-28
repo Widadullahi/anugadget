@@ -16,7 +16,7 @@
 .logo-mark::first-line { transform: rotate(-45deg); }
 .brand-logo { width: clamp(72px, 10vh, 112px); height: clamp(48px, 9vh, 78px); margin: 0 auto 6px; object-fit: contain; }
 .brand h2 { margin: 0; color: var(--gold); font-size: 20px; letter-spacing: .3em; }
-.brand p { margin: 5px 0 0; color: var(--gold); font: 12px Arial, sans-serif; letter-spacing: .08em; }
+.brand p { margin: 5px 0 0; color: #ffffff; font: 12px Arial, sans-serif; letter-spacing: .08em; }
 .hero { margin: 0 auto; text-align: center; max-width: 740px; }
 .hero h1 { margin: 0; color: #fafafa; font-size: clamp(30px, 4.5vw, 58px); line-height: 1.05; font-weight: 500; }
 .hero h1 span { color: var(--gold); font-style: italic; }

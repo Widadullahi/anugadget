@@ -119,7 +119,7 @@ const Vehicles = () => {
       <VehicleHero />
 
       {/* Stats Bar */}
-      <section className="relative border-y border-gray-100 bg-gradient-to-r from-blue-50/80 via-white to-blue-50/80">
+      <section className="relative border-y border-gray-100 bg-gradient-to-r from-gray-50 via-white to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-gray-100">
             {stats.map((stat, i) => (
@@ -128,7 +128,7 @@ const Vehicles = () => {
                 className="py-8 sm:py-10 text-center"
                 style={{ animation: `fadeInUp 0.6s ease-out ${0.1 * i}s both` }}
               >
-                <p className="text-3xl sm:text-4xl font-black bg-gradient-to-b from-[#0a7bb3] to-[#0a7bb3]/70 bg-clip-text text-transparent">
+                <p className="text-3xl sm:text-4xl font-black bg-gradient-to-b from-[#d4af37] to-[#a8862a] bg-clip-text text-transparent">
                   {stat.value}
                 </p>
                 <p className="text-xs text-gray-400 mt-1 tracking-wider uppercase">{stat.label}</p>
@@ -147,7 +147,7 @@ const Vehicles = () => {
               <p className="text-[#d4af37] text-xs font-bold tracking-[0.2em] uppercase mb-2">Our Collection</p>
               <h2 className="text-3xl sm:text-4xl font-black text-gray-900">
                 Featured{" "}
-                <span className="bg-gradient-to-r from-[#0a7bb3] to-[#d4af37] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#d4af37] to-[#f0d772] bg-clip-text text-transparent">
                   Vehicles
                 </span>
               </h2>
@@ -158,7 +158,7 @@ const Vehicles = () => {
                   key={i}
                   onClick={() => setActiveSlide(i)}
                   className={`h-1 transition-all duration-300 ${
-                    i === activeSlide ? "bg-gradient-to-r from-[#0a7bb3] to-[#d4af37] w-14" : "bg-gray-200 hover:bg-gray-300 w-10"
+                    i === activeSlide ? "bg-gradient-to-r from-[#d4af37] to-[#f0d772] w-14" : "bg-gray-200 hover:bg-gray-300 w-10"
                   }`}
                 />
               ))}
@@ -166,7 +166,7 @@ const Vehicles = () => {
           </div>
 
           {/* Featured Display */}
-          <div className="relative bg-gradient-to-br from-blue-50/60 to-white border border-gray-100 p-6 sm:p-10 lg:p-14 shadow-lg shadow-blue-500/5">
+          <div className="relative bg-gradient-to-br from-gray-50 to-white border border-gray-200 p-6 sm:p-10 lg:p-14 shadow-lg shadow-black/5">
             {/* Corner Accents */}
             <div className="absolute top-0 left-0 w-16 h-16 border-t border-l border-[#d4af37]/30" />
             <div className="absolute top-0 right-0 w-16 h-16 border-t border-r border-[#d4af37]/30" />
@@ -176,14 +176,14 @@ const Vehicles = () => {
             <div className="grid lg:grid-cols-2 gap-10 items-center">
               {/* Vehicle Image */}
               <div className="relative group">
-                <div className="absolute inset-0 bg-[#0a7bb3]/5 blur-[60px] rounded-full group-hover:bg-[#0a7bb3]/10 transition-all duration-700" />
+                <div className="absolute inset-0 bg-[#d4af37]/10 blur-[60px] rounded-full group-hover:bg-[#d4af37]/20 transition-all duration-700" />
                 <img
                   src={vehicles[activeSlide].image}
                   alt={vehicles[activeSlide].name}
                   className="relative w-full max-w-lg mx-auto drop-shadow-xl transition-all duration-700 hover:scale-105"
                 />
                 {/* Category Badge */}
-                <div className="absolute top-4 left-4 px-3 py-1 bg-gradient-to-r from-[#0a7bb3] to-[#0c87bf] text-white text-[10px] font-bold tracking-wider uppercase shadow-lg shadow-[#0a7bb3]/20">
+                <div className="absolute top-4 left-4 px-3 py-1 bg-gradient-to-r from-[#d4af37] to-[#f0d772] text-black text-[10px] font-bold tracking-wider uppercase shadow-lg shadow-[#d4af37]/20">
                   {vehicles[activeSlide].category}
                 </div>
                 {/* Year Badge */}
@@ -201,7 +201,7 @@ const Vehicles = () => {
                   <h3 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">
                     {vehicles[activeSlide].name}
                   </h3>
-                  <p className="text-2xl font-bold bg-gradient-to-r from-[#0a7bb3] to-[#d4af37] bg-clip-text text-transparent">
+                  <p className="text-2xl font-bold bg-gradient-to-r from-[#d4af37] to-[#f0d772] bg-clip-text text-transparent">
                     {vehicles[activeSlide].price}
                   </p>
                 </div>
@@ -213,8 +213,8 @@ const Vehicles = () => {
                     { icon: Car, label: "Engine", value: vehicles[activeSlide].engine },
                     { icon: Gauge, label: "0-100", value: vehicles[activeSlide].speed },
                   ].map((spec, i) => (
-                    <div key={i} className="bg-blue-50/60 border border-blue-100 p-3 text-center rounded-lg">
-                      <spec.icon className="h-5 w-5 text-[#0a7bb3] mx-auto mb-1.5" />
+                    <div key={i} className="bg-gray-50 border border-gray-200 p-3 text-center rounded-lg">
+                      <spec.icon className="h-5 w-5 text-[#d4af37] mx-auto mb-1.5" />
                       <p className="text-[10px] text-gray-400 uppercase tracking-wider">{spec.label}</p>
                       <p className="text-xs font-bold text-gray-800 mt-0.5">{spec.value}</p>
                     </div>
@@ -236,10 +236,10 @@ const Vehicles = () => {
 
                 {/* Actions */}
                 <div className="flex flex-wrap gap-3 pt-2">
-                  <button className="px-6 py-2.5 bg-gradient-to-r from-[#0a7bb3] to-[#0c87bf] text-white text-xs font-bold tracking-wider uppercase hover:from-[#0c87bf] hover:to-[#0ea5e9] transition-all shadow-lg shadow-[#0a7bb3]/20 rounded-lg">
+                  <button className="px-6 py-2.5 bg-gradient-to-r from-[#d4af37] to-[#f0d772] text-black text-xs font-bold tracking-wider uppercase hover:from-[#f0d772] hover:to-[#e6c64f] transition-all shadow-lg shadow-[#d4af37]/20 rounded-lg">
                     Enquire Now
                   </button>
-                  <button className="px-6 py-2.5 border border-[#d4af37]/30 text-[#d4af37] text-xs font-bold tracking-wider uppercase hover:bg-[#d4af37]/5 transition-all rounded-lg">
+                  <button className="px-6 py-2.5 border border-[#d4af37]/30 text-[#d4af37] text-xs font-bold tracking-wider uppercase hover:bg-[#d4af37]/10 transition-all rounded-lg">
                     View Details
                   </button>
                 </div>
@@ -250,13 +250,17 @@ const Vehicles = () => {
       </section>
 
       {/* Vehicle Grid */}
-      <section className="py-20 sm:py-28 bg-gray-50/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 sm:py-28 relative bg-white">
+        {/* Background Image */}
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/vehiclebackground.png)" }} />
+        <div className="absolute inset-0 bg-white/90" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <p className="text-[#d4af37] text-xs font-bold tracking-[0.2em] uppercase mb-2">Browse</p>
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900">
               Full{" "}
-              <span className="bg-gradient-to-r from-[#0a7bb3] to-[#d4af37] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#d4af37] to-[#f0d772] bg-clip-text text-transparent">
                 Inventory
               </span>
             </h2>
@@ -266,17 +270,17 @@ const Vehicles = () => {
             {vehicles.map((vehicle, i) => (
               <div
                 key={vehicle.id}
-                className="group bg-white border border-gray-100 hover:border-[#d4af37]/30 hover:shadow-xl hover:shadow-[#0a7bb3]/5 transition-all duration-500 overflow-hidden rounded-xl"
+                className="group bg-white border border-gray-200 hover:border-[#d4af37]/40 hover:shadow-xl hover:shadow-[#d4af37]/10 transition-all duration-500 overflow-hidden rounded-xl"
                 style={{ animation: `fadeInUp 0.6s ease-out ${0.1 * i}s both` }}
               >
                 {/* Image */}
-                <div className="relative h-52 bg-gradient-to-b from-blue-50/60 to-white overflow-hidden">
+                <div className="relative h-52 bg-gradient-to-b from-gray-100 to-white overflow-hidden">
                   <img
                     src={vehicle.image}
                     alt={vehicle.name}
                     className="w-full h-full object-contain p-6 group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute top-3 left-3 px-2.5 py-0.5 bg-gradient-to-r from-[#0a7bb3] to-[#0c87bf] text-white text-[10px] font-bold tracking-wider uppercase rounded-md shadow-md">
+                  <div className="absolute top-3 left-3 px-2.5 py-0.5 bg-gradient-to-r from-[#d4af37] to-[#f0d772] text-black text-[10px] font-bold tracking-wider uppercase rounded-md shadow-md">
                     {vehicle.category}
                   </div>
                   <div className="absolute top-3 right-3 px-2.5 py-0.5 bg-white/90 backdrop-blur-sm border border-[#d4af37]/20 text-[#d4af37] text-[10px] font-bold rounded-md">
@@ -286,10 +290,10 @@ const Vehicles = () => {
 
                 {/* Content */}
                 <div className="p-5">
-                  <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-[#0a7bb3] transition-colors">
+                  <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-[#d4af37] transition-colors">
                     {vehicle.name}
                   </h3>
-                  <p className="font-bold text-lg mb-4 bg-gradient-to-r from-[#0a7bb3] to-[#d4af37] bg-clip-text text-transparent">
+                  <p className="font-bold text-lg mb-4 bg-gradient-to-r from-[#d4af37] to-[#f0d772] bg-clip-text text-transparent">
                     {vehicle.price}
                   </p>
 
@@ -309,7 +313,7 @@ const Vehicles = () => {
                   </div>
 
                   <div className="flex gap-2">
-                    <button className="flex-1 py-2 bg-[#0a7bb3]/10 border border-[#0a7bb3]/20 text-[#0a7bb3] text-[11px] font-bold tracking-wider uppercase hover:bg-[#0a7bb3] hover:text-white transition-all rounded-lg">
+                    <button className="flex-1 py-2 bg-[#d4af37]/10 border border-[#d4af37]/30 text-[#d4af37] text-[11px] font-bold tracking-wider uppercase hover:bg-[#d4af37] hover:text-black transition-all rounded-lg">
                       Enquire
                     </button>
                     <button className="px-3 py-2 border border-gray-200 text-gray-400 text-[11px] hover:border-[#d4af37]/40 hover:text-[#d4af37] transition-all rounded-lg">
@@ -324,13 +328,13 @@ const Vehicles = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 sm:py-28 relative bg-white">
+      <section className="py-20 sm:py-28 relative bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <p className="text-[#d4af37] text-xs font-bold tracking-[0.2em] uppercase mb-2">Why Choose Us</p>
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900">
               The{" "}
-              <span className="bg-gradient-to-r from-[#0a7bb3] to-[#d4af37] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#d4af37] to-[#f0d772] bg-clip-text text-transparent">
                 Anu
               </span>{" "}
               Difference
@@ -341,11 +345,11 @@ const Vehicles = () => {
             {features.map((feature, i) => (
               <div
                 key={i}
-                className="group p-6 bg-white border border-gray-100 hover:border-[#d4af37]/30 hover:shadow-xl hover:shadow-[#0a7bb3]/5 transition-all duration-500 text-center rounded-xl"
+                className="group p-6 bg-white border border-gray-200 hover:border-[#d4af37]/30 hover:shadow-xl hover:shadow-[#d4af37]/10 transition-all duration-500 text-center rounded-xl"
                 style={{ animation: `fadeInUp 0.6s ease-out ${0.15 * i}s both` }}
               >
-                <div className="w-14 h-14 mx-auto mb-4 border border-blue-100 flex items-center justify-center group-hover:bg-[#0a7bb3]/10 transition-all rounded-xl">
-                  <feature.icon className="h-6 w-6 text-[#0a7bb3]" />
+                <div className="w-14 h-14 mx-auto mb-4 border border-gray-200 flex items-center justify-center group-hover:bg-[#d4af37]/10 transition-all rounded-xl">
+                  <feature.icon className="h-6 w-6 text-[#d4af37]" />
                 </div>
                 <h3 className="text-sm font-bold text-gray-900 mb-2">{feature.title}</h3>
                 <p className="text-xs text-gray-500 leading-relaxed">{feature.desc}</p>
@@ -356,12 +360,12 @@ const Vehicles = () => {
       </section>
 
       {/* Financing CTA */}
-      <section className="py-20 sm:py-28 bg-gradient-to-b from-blue-50/60 to-white" id="financing">
+      <section className="py-20 sm:py-28 bg-gradient-to-b from-gray-50 to-white" id="financing">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-[#d4af37] text-xs font-bold tracking-[0.2em] uppercase mb-3">Flexible Options</p>
           <h2 className="text-3xl sm:text-5xl font-black text-gray-900 mb-6">
             Premium{" "}
-            <span className="bg-gradient-to-r from-[#0a7bb3] to-[#d4af37] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#d4af37] to-[#f0d772] bg-clip-text text-transparent">
               Financing
             </span>
           </h2>
@@ -370,11 +374,11 @@ const Vehicles = () => {
           </p>
           <div className="grid sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
             {[
-              { title: "Low Interest", desc: "Competitive rates from 8% p.a.", color: "from-[#0a7bb3] to-[#0c87bf]" },
-              { title: "Quick Approval", desc: "Get approved within 48 hours", color: "from-[#0c87bf] to-[#d4af37]" },
-              { title: "Flexible Terms", desc: "12 to 60 month plans available", color: "from-[#d4af37] to-[#d4af37]" },
+              { title: "Low Interest", desc: "Competitive rates from 8% p.a.", color: "from-[#a8862a] to-[#d4af37]" },
+              { title: "Quick Approval", desc: "Get approved within 48 hours", color: "from-[#d4af37] to-[#f0d772]" },
+              { title: "Flexible Terms", desc: "12 to 60 month plans available", color: "from-[#d4af37] to-[#e6c64f]" },
             ].map((item, i) => (
-              <div key={i} className="p-4 border border-gray-100 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+              <div key={i} className="p-4 border border-gray-200 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
                 <div className={`h-0.5 w-12 bg-gradient-to-r ${item.color} mx-auto mb-3 rounded-full`} />
                 <h4 className="text-sm font-bold text-gray-900 mb-1">{item.title}</h4>
                 <p className="text-xs text-gray-500">{item.desc}</p>
@@ -383,7 +387,7 @@ const Vehicles = () => {
           </div>
           <a
             href="#contact"
-            className="inline-flex mt-10 px-8 py-3 bg-gradient-to-r from-[#0a7bb3] to-[#0c87bf] text-white text-xs font-bold tracking-wider uppercase hover:from-[#0c87bf] hover:to-[#0ea5e9] transition-all shadow-lg shadow-[#0a7bb3]/20 rounded-full"
+            className="inline-flex mt-10 px-8 py-3 bg-gradient-to-r from-[#d4af37] to-[#f0d772] text-black text-xs font-bold tracking-wider uppercase hover:from-[#f0d772] hover:to-[#e6c64f] transition-all shadow-lg shadow-[#d4af37]/20 rounded-full"
           >
             Apply for Financing
           </a>
@@ -398,7 +402,7 @@ const Vehicles = () => {
               <p className="text-[#d4af37] text-xs font-bold tracking-[0.2em] uppercase mb-3">Get In Touch</p>
               <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-6">
                 Book a{" "}
-                <span className="bg-gradient-to-r from-[#0a7bb3] to-[#d4af37] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#d4af37] to-[#f0d772] bg-clip-text text-transparent">
                   Test Drive
                 </span>
               </h2>
@@ -412,7 +416,7 @@ const Vehicles = () => {
                   { icon: Clock, text: "Mon - Sat: 9:00 AM - 6:00 PM" },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3 text-sm text-gray-600">
-                    <item.icon className="h-4 w-4 text-[#0a7bb3] shrink-0" />
+                    <item.icon className="h-4 w-4 text-[#d4af37] shrink-0" />
                     {item.text}
                   </div>
                 ))}
@@ -420,7 +424,7 @@ const Vehicles = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="bg-gray-50/80 border border-gray-100 p-6 sm:p-8 rounded-2xl shadow-sm">
+            <div className="bg-gray-50 border border-gray-200 p-6 sm:p-8 rounded-2xl shadow-sm">
               <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
@@ -428,7 +432,7 @@ const Vehicles = () => {
                     <input
                       type="text"
                       placeholder="Your name"
-                      className="w-full bg-white border border-gray-200 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-[#0a7bb3]/40 focus:ring-1 focus:ring-[#0a7bb3]/20 outline-none transition-colors rounded-lg"
+                      className="w-full bg-white border border-gray-200 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-[#d4af37]/40 focus:ring-1 focus:ring-[#d4af37]/20 outline-none transition-colors rounded-lg"
                     />
                   </div>
                   <div>
@@ -436,7 +440,7 @@ const Vehicles = () => {
                     <input
                       type="tel"
                       placeholder="+234..."
-                      className="w-full bg-white border border-gray-200 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-[#0a7bb3]/40 focus:ring-1 focus:ring-[#0a7bb3]/20 outline-none transition-colors rounded-lg"
+                      className="w-full bg-white border border-gray-200 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-[#d4af37]/40 focus:ring-1 focus:ring-[#d4af37]/20 outline-none transition-colors rounded-lg"
                     />
                   </div>
                 </div>
@@ -445,12 +449,12 @@ const Vehicles = () => {
                   <input
                     type="email"
                     placeholder="your@email.com"
-                    className="w-full bg-white border border-gray-200 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-[#0a7bb3]/40 focus:ring-1 focus:ring-[#0a7bb3]/20 outline-none transition-colors rounded-lg"
+                    className="w-full bg-white border border-gray-200 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-[#d4af37]/40 focus:ring-1 focus:ring-[#d4af37]/20 outline-none transition-colors rounded-lg"
                   />
                 </div>
                 <div>
                   <label className="block text-[11px] text-gray-500 uppercase tracking-wider mb-1.5 font-medium">Interested Vehicle</label>
-                  <select className="w-full bg-white border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-[#0a7bb3]/40 focus:ring-1 focus:ring-[#0a7bb3]/20 outline-none transition-colors appearance-none rounded-lg">
+                  <select className="w-full bg-white border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-[#d4af37]/40 focus:ring-1 focus:ring-[#d4af37]/20 outline-none transition-colors appearance-none rounded-lg">
                     <option value="">Select a vehicle</option>
                     {vehicles.map((v) => (
                       <option key={v.id} value={v.name}>{v.name}</option>
@@ -462,12 +466,12 @@ const Vehicles = () => {
                   <textarea
                     rows={3}
                     placeholder="Tell us about your requirements..."
-                    className="w-full bg-white border border-gray-200 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-[#0a7bb3]/40 focus:ring-1 focus:ring-[#0a7bb3]/20 outline-none transition-colors resize-none rounded-lg"
+                    className="w-full bg-white border border-gray-200 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-[#d4af37]/40 focus:ring-1 focus:ring-[#d4af37]/20 outline-none transition-colors resize-none rounded-lg"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-3 bg-gradient-to-r from-[#0a7bb3] to-[#0c87bf] text-white text-xs font-bold tracking-wider uppercase hover:from-[#0c87bf] hover:to-[#0ea5e9] transition-all shadow-lg shadow-[#0a7bb3]/20 rounded-lg"
+                  className="w-full py-3 bg-gradient-to-r from-[#d4af37] to-[#f0d772] text-black text-xs font-bold tracking-wider uppercase hover:from-[#f0d772] hover:to-[#e6c64f] transition-all shadow-lg shadow-[#d4af37]/20 rounded-lg"
                 >
                   Schedule Test Drive
                 </button>
