@@ -215,6 +215,42 @@
   color: white;
 }
 
+.mobile-dropdown {
+  display: none;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background: rgba(6, 21, 46, 0.97);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(213, 174, 82, 0.25);
+  padding: 18px 24px 26px;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mobile-dropdown a {
+  color: #e8eaf0;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  transition: color 0.3s;
+}
+
+.mobile-dropdown a:hover {
+  color: #d5ae52;
+}
+
+@media (max-width: 700px) {
+  .mobile-dropdown {
+    display: flex;
+  }
+}
+
 /* =========================
    MAIN HERO
 ========================= */

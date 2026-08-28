@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   ShieldCheck,
   Award,
@@ -9,10 +9,12 @@ import {
   ArrowRight,
   MapPin,
   Clock,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import VehiclesFooter from "@/components/VehiclesFooter";
 import VehicleHero from "@/components/VehicleHero";
-import { vehicles } from "@/data/vehicles";
+import { useVehicles } from "@/data/vehicleStore";
 
 const features = [
   { icon: ShieldCheck, title: "Certified Pre-Owned", desc: "Every vehicle undergoes a 200+ point inspection" },
@@ -63,18 +65,43 @@ const brandLogos = [
 ];
 
 const Vehicles = () => {
-  const [featured, setFeatured] = useState(() => Math.floor(Math.random() * vehicles.length));
+  const [cars] = useVehicles();
+  const [featured, setFeatured] = useState(0);
+  const location = useLocation();
 
   useEffect(() => {
+    if (cars.length > 0) {
+      setFeatured((prev) => (prev >= cars.length ? 0 : prev));
+    }
+  }, [cars.length]);
+
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.getElementById(location.hash.slice(1));
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.pageYOffset - 80;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [location]);
+
+  useEffect(() => {
+    setFeatured(Math.floor(Math.random() * cars.length));
+  }, [cars.length]);
+
+  useEffect(() => {
+    if (cars.length <= 1) return;
     const timer = setInterval(() => {
       setFeatured((prev) => {
-        let next = Math.floor(Math.random() * vehicles.length);
-        if (next === prev) next = (next + 1) % vehicles.length;
+        let next = Math.floor(Math.random() * cars.length);
+        if (next === prev) next = (next + 1) % cars.length;
         return next;
       });
     }, 6000);
     return () => clearInterval(timer);
-  }, []);
+  }, [cars.length]);
 
   return (
     <div className="min-h-screen bg-white text-gray-900 overflow-x-hidden">
@@ -105,8 +132,8 @@ const Vehicles = () => {
         {/* Background Image — the featured car's own photo */}
         <div key={featured} className="absolute inset-0 z-0 hero-fade">
           <img
-            src={vehicles[featured].image}
-            alt={vehicles[featured].name}
+            src={cars[featured].image}
+            alt={cars[featured].name}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/55 z-10 pointer-events-none" />
@@ -115,13 +142,13 @@ const Vehicles = () => {
         {/* Centered Content */}
         <div key={featured} className="relative z-20 text-center px-6 hero-fade pointer-events-auto">
           <p className="text-[#cfa78a] text-[10px] sm:text-xs uppercase tracking-[0.35em] font-medium mb-5">
-            {vehicles[featured].subtitle}
+            {cars[featured].subtitle}
           </p>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif font-semibold text-[#f5f5f0] leading-tight tracking-tight">
-            {vehicles[featured].name.toUpperCase()}
+            {cars[featured].name.toUpperCase()}
             <br />
             <span className="text-2xl sm:text-3xl md:text-4xl italic text-[#cfa78a] font-normal tracking-normal block mt-4">
-              {vehicles[featured].highlight}
+              {cars[featured].highlight}
             </span>
           </h2>
           <Link
@@ -132,18 +159,29 @@ const Vehicles = () => {
           </Link>
         </div>
 
-        {/* Slide Indicators */}
-        <div className="absolute bottom-24 md:bottom-32 flex space-x-4 z-30">
-          {vehicles.map((_, d) => (
+        {/* Slide Controls */}
+        <div className="absolute bottom-24 md:bottom-32 left-0 right-0 z-30 flex items-center justify-between px-6 sm:px-10">
+          <span className="text-xs tracking-[0.3em] text-[#f5f5f0]/60 font-medium">
+            {String(featured + 1).padStart(2, "0")}{" "}
+            <span className="text-[#cfa78a]">/</span>{" "}
+            {String(vehiclesCounter).padStart(2, "0")}
+          </span>
+          <div className="flex gap-2">
             <button
-              key={d}
-              onClick={() => setFeatured(d)}
-              aria-label={`Go to slide ${d + 1}`}
-              className={`h-[2px] transition-all duration-700 ease-in-out cursor-pointer ${
-                d === featured ? "w-12 bg-[#cfa78a]" : "w-4 bg-[#cfa78a]/30 hover:bg-[#cfa78a]/70"
-              }`}
-            />
-          ))}
+              onClick={() => setFeatured((featured + vehicles.length - 1) % vehicles.length)}
+              aria-label="Previous vehicle"
+              className="w-10 h-10 border border-[#f5f5f0]/25 text-[#f5f5f0] hover:bg-[#cfa78a] hover:border-[#cfa78a] hover:text-[#0f1012] transition-all"
+            >
+              <ChevronLeft className="h-4 w-4 mx-auto" />
+            </button>
+            <button
+              onClick={() => setFeatured((featured + 1) % vehicles.length)}
+              aria-label="Next vehicle"
+              className="w-10 h-10 border border-[#f5f5f0]/25 text-[#f5f5f0] hover:bg-[#cfa78a] hover:border-[#cfa78a] hover:text-[#0f1012] transition-all"
+            >
+              <ChevronRight className="h-4 w-4 mx-auto" />
+            </button>
+          </div>
         </div>
 
         {/* Bottom Fade */}
@@ -313,7 +351,7 @@ const Vehicles = () => {
       </section>
 
       {/* Contact / Test Drive */}
-      <section className="py-20 sm:py-28 bg-white" id="contact">
+      <section className="py-20 sm:py-28 bg-white scroll-mt-20" id="contact">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>

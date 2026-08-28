@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   ArrowRight,
   ShieldCheck,
   Star,
   Phone,
   Menu,
+  X,
   Lock,
   CheckCircle,
   Headphones,
@@ -17,6 +20,10 @@ import logo from "/whitelogo.png";
 import "./VehicleHero.css";
 
 const VehicleHero = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <section className="vehicle-hero">
       {/* Background Image */}
@@ -40,8 +47,8 @@ const VehicleHero = () => {
 
         <div className="nav-links">
           <a href="#home">Home</a>
-          <a href="#inventory">Vehicles</a>
-          <a href="#about">About Us</a>
+          <Link to="/inventory">Inventory</Link>
+          <Link to="/vehicles/about">About Us</Link>
           <a href="#financing">Services</a>
         </div>
 
@@ -50,10 +57,21 @@ const VehicleHero = () => {
           Contact Us
         </a>
 
-        <button className="mobile-menu">
-          <Menu size={24} />
+        <button className="mobile-menu" onClick={() => setMenuOpen((o) => !o)} aria-label="Toggle menu">
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </nav>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="mobile-dropdown">
+          <a href="#home" onClick={closeMenu}>Home</a>
+          <Link to="/inventory" onClick={closeMenu}>Inventory</Link>
+          <Link to="/vehicles/about" onClick={closeMenu}>About Us</Link>
+          <a href="#financing" onClick={closeMenu}>Services</a>
+          <a href="#contact" onClick={closeMenu}>Contact Us</a>
+        </div>
+      )}
 
       {/* Main Hero */}
       <div className="hero-container">
