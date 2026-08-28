@@ -164,18 +164,18 @@ const Vehicles = () => {
           <span className="text-xs tracking-[0.3em] text-[#f5f5f0]/60 font-medium">
             {String(featured + 1).padStart(2, "0")}{" "}
             <span className="text-[#cfa78a]">/</span>{" "}
-            {String(vehiclesCounter).padStart(2, "0")}
+            {String(cars.length).padStart(2, "0")}
           </span>
           <div className="flex gap-2">
             <button
-              onClick={() => setFeatured((featured + vehicles.length - 1) % vehicles.length)}
+              onClick={() => setFeatured((featured + cars.length - 1) % cars.length)}
               aria-label="Previous vehicle"
               className="w-10 h-10 border border-[#f5f5f0]/25 text-[#f5f5f0] hover:bg-[#cfa78a] hover:border-[#cfa78a] hover:text-[#0f1012] transition-all"
             >
               <ChevronLeft className="h-4 w-4 mx-auto" />
             </button>
             <button
-              onClick={() => setFeatured((featured + 1) % vehicles.length)}
+              onClick={() => setFeatured((featured + 1) % cars.length)}
               aria-label="Next vehicle"
               className="w-10 h-10 border border-[#f5f5f0]/25 text-[#f5f5f0] hover:bg-[#cfa78a] hover:border-[#cfa78a] hover:text-[#0f1012] transition-all"
             >
@@ -209,7 +209,7 @@ const Vehicles = () => {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {vehicles.slice(0, 6).map((vehicle, i) => (
+            {cars.slice(0, 6).map((vehicle, i) => (
               <div
                 key={vehicle.id}
                 className="group bg-white border border-gray-200 hover:border-[#d4af37]/40 hover:shadow-xl hover:shadow-[#d4af37]/10 transition-all duration-500 overflow-hidden rounded-xl"
@@ -412,7 +412,7 @@ const Vehicles = () => {
                   <label className="block text-[11px] text-gray-500 uppercase tracking-wider mb-1.5 font-medium">Interested Vehicle</label>
                   <select className="w-full bg-white border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-[#d4af37]/40 focus:ring-1 focus:ring-[#d4af37]/20 outline-none transition-colors appearance-none rounded-lg">
                     <option value="">Select a vehicle</option>
-                    {vehicles.map((v) => (
+                    {cars.map((v) => (
                       <option key={v.id} value={v.name}>{v.name}</option>
                     ))}
                   </select>

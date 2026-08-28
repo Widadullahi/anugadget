@@ -5,6 +5,9 @@ const FloatingWhatsApp = () => {
   if (location.pathname.startsWith("/admin")) {
     return null;
   }
+  const isVehicles = location.pathname.startsWith("/vehicles");
+  const from = isVehicles ? "#e6c64f" : "#1ba0d8";
+  const to = isVehicles ? "#d4af37" : "#0a5fae";
   return (
     <a
       href="https://wa.me/2348127704308"
@@ -15,12 +18,12 @@ const FloatingWhatsApp = () => {
     >
       <svg viewBox="0 0 64 64" aria-hidden="true" className="h-14 w-14">
         <defs>
-          <radialGradient id="waGreen" cx="30%" cy="30%" r="75%">
-            <stop offset="0%" stopColor="#e6c64f" />
-            <stop offset="100%" stopColor="#d4af37" />
+          <radialGradient id="waBubble" cx="30%" cy="30%" r="75%">
+            <stop offset="0%" stopColor={from} />
+            <stop offset="100%" stopColor={to} />
           </radialGradient>
         </defs>
-        <circle cx="32" cy="32" r="30" fill="url(#waGreen)" />
+        <circle cx="32" cy="32" r="30" fill="url(#waBubble)" />
         <path
           fill="#ffffff"
           d="M46.7 17.3c-3.9-3.9-9.1-6-14.6-6-11.4 0-20.7 9.2-20.7 20.6 0 3.6 1 7.1 2.8 10.1L12 52l10.4-2.7c2.9 1.6 6.2 2.4 9.7 2.4h.1c11.4 0 20.7-9.2 20.7-20.6 0-5.5-2.1-10.7-6.2-14.8zM32.1 48.2h-.1c-3.1 0-6.1-.9-8.8-2.5l-.6-.4-6.2 1.6 1.7-6.1-.4-.6c-1.7-2.8-2.6-6-2.6-9.3 0-9.5 7.8-17.3 17.4-17.3 4.6 0 9 1.8 12.3 5.1 3.3 3.3 5.1 7.6 5.1 12.2 0 9.6-7.8 17.3-17.8 17.3z"

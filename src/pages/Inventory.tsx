@@ -10,15 +10,7 @@ import {
   X,
 } from "lucide-react";
 import VehiclesFooter from "@/components/VehiclesFooter";
-import {
-  vehicles,
-  vehicleBrands,
-  vehicleCategories,
-  vehicleFuels,
-  vehicleTransmissions,
-  vehicleDrives,
-  vehicleYears,
-} from "@/data/vehicles";
+import { getVehicleOptions, useVehicles } from "@/data/vehicleStore";
 
 const PAGE_SIZE = 9;
 
@@ -29,13 +21,6 @@ const PRICE_RANGES = [
   { label: "₦100M – ₦150M", test: (p: number) => p >= 100_000_000 && p < 150_000_000 },
   { label: "₦150M +", test: (p: number) => p >= 150_000_000 },
 ];
-
-const brands = vehicleBrands;
-const cats = vehicleCategories.slice(1);
-const fuels = vehicleFuels;
-const transmissions = vehicleTransmissions;
-const drives = vehicleDrives;
-const years = vehicleYears;
 
 function Check({
   checked,
@@ -69,6 +54,15 @@ function Group({ title, children }: { title: string; children: React.ReactNode }
 }
 
 const Inventory = () => {
+  const [vehicles] = useVehicles();
+  const opts = useMemo(() => getVehicleOptions(vehicles), [vehicles]);
+  const brands = opts.brands;
+  const cats = opts.categories.slice(1);
+  const fuels = opts.fuels;
+  const transmissions = opts.transmissions;
+  const drives = opts.drives;
+  const years = opts.years;
+
   const [search, setSearch] = useState("");
   const [brandSel, setBrandSel] = useState<string[]>([]);
   const [catSel, setCatSel] = useState<string[]>([]);
@@ -123,7 +117,7 @@ const Inventory = () => {
       if (!PRICE_RANGES[priceIdx].test(car.priceValue)) return false;
       return true;
     });
-  }, [search, brandSel, catSel, fuelSel, transSel, driveSel, yearSel, priceIdx]);
+  }, [search, brandSel, catSel, fuelSel, transSel, driveSel, yearSel, priceIdx, vehicles]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const current = Math.min(page, totalPages);

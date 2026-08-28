@@ -11,6 +11,7 @@ import {
   Lock,
   CheckCircle,
   Headphones,
+  ChevronRight,
 } from "lucide-react";
 
 import carImage from "/car.png";
@@ -65,11 +66,41 @@ const VehicleHero = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="mobile-dropdown">
-          <a href="#home" onClick={closeMenu}>Home</a>
-          <Link to="/inventory" onClick={closeMenu}>Inventory</Link>
-          <Link to="/vehicles/about" onClick={closeMenu}>About Us</Link>
-          <a href="#financing" onClick={closeMenu}>Services</a>
-          <a href="#contact" onClick={closeMenu}>Contact Us</a>
+          <p className="mobile-dropdown-label">Menu</p>
+          <div className="mobile-dropdown-links">
+            <a href="#home" onClick={closeMenu}>
+              <span className="mobile-link-left">
+                <span className="mobile-link-num">01</span>
+                Home
+              </span>
+              <ChevronRight className="mobile-link-arrow" size={16} />
+            </a>
+            <Link to="/inventory" onClick={closeMenu}>
+              <span className="mobile-link-left">
+                <span className="mobile-link-num">02</span>
+                Inventory
+              </span>
+              <ChevronRight className="mobile-link-arrow" size={16} />
+            </Link>
+            <Link to="/vehicles/about" onClick={closeMenu}>
+              <span className="mobile-link-left">
+                <span className="mobile-link-num">03</span>
+                About Us
+              </span>
+              <ChevronRight className="mobile-link-arrow" size={16} />
+            </Link>
+            <a href="#financing" onClick={closeMenu}>
+              <span className="mobile-link-left">
+                <span className="mobile-link-num">04</span>
+                Services
+              </span>
+              <ChevronRight className="mobile-link-arrow" size={16} />
+            </a>
+          </div>
+          <a href="#contact" onClick={closeMenu} className="mobile-dropdown-cta">
+            <Phone size={15} />
+            Contact Us
+          </a>
         </div>
       )}
 

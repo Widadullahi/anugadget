@@ -17,6 +17,7 @@ export interface Vehicle {
   drive: string;
   features: string[];
   image: string;
+  images?: string[];
 }
 
 const v = (

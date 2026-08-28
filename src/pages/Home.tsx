@@ -13,8 +13,11 @@ import appleWatchUltra2 from "@/assets/apple-watch-ultra-2.jpg";
 import airpodsPro2 from "@/assets/airpods-pro-2.jpg";
 import { useProducts } from "@/hooks/useProducts";
 import { useAdminSettings } from "@/hooks/useAdminSettings";
+import { usePromos } from "@/hooks/usePromos";
 
 const Home = () => {
+  const [promos] = usePromos();
+  const promo = promos.find((p) => p.enabled);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [countdown, setCountdown] = useState({
     days: 0,
@@ -432,17 +435,19 @@ const Home = () => {
       </section>
 
       {/* Promo Banner */}
-      <section className="py-5 sm:py-7 lg:py-8 w-full">
-        <div className="container w-full">
-          <div className="bg-gradient-to-r from-primary via-primary to-primary/80 rounded-2xl p-6 sm:p-8 lg:p-12 text-primary-foreground text-center shadow-xl">
-            <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-black mb-2 sm:mb-3">Power Deals</h2>
-            <p className="text-sm sm:text-base lg:text-lg mb-4 sm:mb-6 text-primary-foreground/90">Never Go Dark Again | Power Stations Promo Up to 40% Discount</p>
-            <Button asChild className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full px-6 sm:px-8 lg:px-10 h-10 sm:h-11 lg:h-12 font-bold shadow-lg shadow-black/20">
-              <Link to="/shop?category=power">Hurry Now!</Link>
-            </Button>
+      {promo && (
+        <section className="py-5 sm:py-7 lg:py-8 w-full">
+          <div className="container w-full">
+            <div className="bg-gradient-to-r from-primary via-primary to-primary/80 rounded-2xl p-6 sm:p-8 lg:p-12 text-primary-foreground text-center shadow-xl">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-black mb-2 sm:mb-3">{promo.title}</h2>
+              <p className="text-sm sm:text-base lg:text-lg mb-4 sm:mb-6 text-primary-foreground/90">{promo.description}</p>
+              <Button asChild className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full px-6 sm:px-8 lg:px-10 h-10 sm:h-11 lg:h-12 font-bold shadow-lg shadow-black/20">
+                <Link to={promo.link}>{promo.buttonLabel}</Link>
+              </Button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Trust Badges */}
       <section className="py-6 sm:py-8 lg:py-10 border-t border-border bg-muted/30 w-full">
