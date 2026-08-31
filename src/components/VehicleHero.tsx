@@ -14,6 +14,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 
+import { useAdminSettings } from "@/hooks/useAdminSettings";
+
 import carImage from "/car.png";
 import bgImage from "/vehiclebackground.png";
 import logo from "/whitelogo.png";
@@ -22,6 +24,7 @@ import "./VehicleHero.css";
 
 const VehicleHero = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const settings = useAdminSettings();
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -43,7 +46,7 @@ const VehicleHero = () => {
       <nav className="vehicle-navbar">
         <div className="logo">
           <img src={logo} alt="AG Logo" className="logo-img" />
-          <span className="logo-text">ANU GADGET</span>
+          <span className="logo-text">{settings.vehicleBrandName}</span>
         </div>
 
         <div className="nav-links">

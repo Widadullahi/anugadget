@@ -161,6 +161,7 @@ const AdminDashboard = () => {
 
   const [settings, setSettings] = useState({
     storeName: "Anu Gadget",
+    vehicleBrandName: "Anu Motors",
     contactEmail: "Gbadamosia21@gmail.com",
     phoneNumber: "+234 812 770 4308",
     address: "3/9 Olukoleosho Ikeja Mokland Plaza",
@@ -173,6 +174,7 @@ const AdminDashboard = () => {
         const parsed = JSON.parse(stored);
         setSettings({
           storeName: parsed?.storeName || "Anu Gadget",
+          vehicleBrandName: parsed?.vehicleBrandName || "Anu Motors",
           contactEmail: parsed?.contactEmail || "Gbadamosia21@gmail.com",
           phoneNumber: parsed?.phoneNumber || "+234 812 770 4308",
           address: parsed?.address || "3/9 Olukoleosho Ikeja Mokland Plaza",
@@ -986,6 +988,13 @@ const AdminDashboard = () => {
                       <Input
                         value={settings.storeName}
                         onChange={(e) => setSettings((prev) => ({ ...prev, storeName: e.target.value }))}
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">Vehicle Brand Name</label>
+                      <Input
+                        value={settings.vehicleBrandName}
+                        onChange={(e) => setSettings((prev) => ({ ...prev, vehicleBrandName: e.target.value }))}
                       />
                     </div>
                     <div>

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin, CreditCard, Shield, Truck } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.jpg";
 import { useAdminSettings } from "@/hooks/useAdminSettings";
 
 const Footer = () => {
@@ -82,7 +82,7 @@ const Footer = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-10">
             {/* About */}
             <div className="col-span-2 sm:col-span-3 lg:col-span-1">
-              <img src={logo} alt="Anu Gadget" className="h-11 sm:h-12 mb-3 sm:mb-4 bg-background rounded p-1" />
+              <img src={logo} alt={settings.storeName} className="h-11 sm:h-12 mb-3 sm:mb-4 bg-background rounded p-1" />
               <p className="text-background/60 text-xs sm:text-sm mb-4 leading-relaxed">
                 Your trusted destination for premium electronics and gadgets in Nigeria. 100% authentic products guaranteed.
               </p>
@@ -165,7 +165,7 @@ const Footer = () => {
       {/* Bottom Bar */}
       <div className="border-t border-background/10 py-3 sm:py-4">
         <div className="container flex flex-col md:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-background/50">
-          <p>&copy; {new Date().getFullYear()} Anu Gadget. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} {settings.storeName}. All rights reserved.</p>
           <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
             <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>

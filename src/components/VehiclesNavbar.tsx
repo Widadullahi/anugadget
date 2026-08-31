@@ -45,11 +45,11 @@ const VehiclesNavbar = () => {
           <Link to="/vehicles" className="flex items-center shrink-0 gap-2 sm:gap-3 group">
             <img
               src={logo}
-              alt="Anu Vehicles"
+              alt={settings.vehicleBrandName}
               className="h-10 sm:h-12 lg:h-14 w-auto group-hover:opacity-100 transition-opacity"
             />
             <span className="hidden sm:block text-[#38bdf8] text-sm lg:text-base xl:text-lg font-bold uppercase tracking-[0.4em]">
-              ANU VEHICLES
+              {settings.vehicleBrandName.toUpperCase()}
             </span>
           </Link>
 

@@ -15,6 +15,7 @@ import {
 import VehiclesFooter from "@/components/VehiclesFooter";
 import VehicleHero from "@/components/VehicleHero";
 import { useVehicles } from "@/data/vehicleStore";
+import { useAdminSettings } from "@/hooks/useAdminSettings";
 
 const features = [
   { icon: ShieldCheck, title: "Certified Pre-Owned", desc: "Every vehicle undergoes a 200+ point inspection" },
@@ -68,6 +69,7 @@ const Vehicles = () => {
   const [cars] = useVehicles();
   const [featured, setFeatured] = useState(0);
   const location = useLocation();
+  const settings = useAdminSettings();
 
   useEffect(() => {
     if (cars.length > 0) {
@@ -289,7 +291,7 @@ const Vehicles = () => {
             <h2 className="text-3xl sm:text-4xl font-black text-[#f5f5f0]">
               The{" "}
               <span className="bg-gradient-to-r from-[#f0d772] to-[#d4af37] bg-clip-text text-transparent">
-                Anu
+                {settings.vehicleBrandName.split(" ")[0]}
               </span>{" "}
               Difference
             </h2>

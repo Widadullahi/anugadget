@@ -4,6 +4,7 @@ const SETTINGS_KEY = "anugadget_admin_settings_v1";
 
 export type AdminSettings = {
   storeName: string;
+  vehicleBrandName: string;
   contactEmail: string;
   phoneNumber: string;
   address: string;
@@ -11,6 +12,7 @@ export type AdminSettings = {
 
 const defaults: AdminSettings = {
   storeName: "Anu Gadget",
+  vehicleBrandName: "Anu Motors",
   contactEmail: "Gbadamosia21@gmail.com",
   phoneNumber: "+234 812 770 4308",
   address: "3/9 Olukoleosho Ikeja Mokland Plaza",
@@ -30,6 +32,7 @@ export const useAdminSettings = () => {
         const parsed = JSON.parse(stored);
         setSettings({
           storeName: parsed.storeName || defaults.storeName,
+          vehicleBrandName: parsed.vehicleBrandName || defaults.vehicleBrandName,
           contactEmail: parsed.contactEmail || defaults.contactEmail,
           phoneNumber: parsed.phoneNumber || defaults.phoneNumber,
           address: parsed.address || defaults.address,

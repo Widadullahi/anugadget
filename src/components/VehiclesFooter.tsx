@@ -15,7 +15,7 @@ const VehiclesFooter = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div>
-            <img src={logo} alt="Anu Vehicles" className="h-10 mb-4" />
+            <img src={logo} alt={settings.vehicleBrandName} className="h-10 mb-4" />
             <p className="text-sm leading-relaxed mb-5 text-slate-400">
               Your trusted destination for premium vehicles in Nigeria. Experience luxury, performance, and reliability.
             </p>
@@ -81,7 +81,7 @@ const VehiclesFooter = () => {
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
-          <p>&copy; {new Date().getFullYear()} Anu Vehicles. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} {settings.vehicleBrandName}. All rights reserved.</p>
           <div className="flex gap-4">
             <a href="#" className="hover:text-[#d4af37] transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-[#d4af37] transition-colors">Terms of Service</a>
